@@ -1,0 +1,11 @@
+{
+  "name": "terminal-canvas",
+  "version": "1.0.0",
+  "description": "Print a canvas and text content on a terminal screen.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Heyenbrock",
+  "license": "ISC"
+}

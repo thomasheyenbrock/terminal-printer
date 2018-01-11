@@ -1,0 +1,12 @@
+{
+  "name": "terminal-matrix",
+  "version": "1.0.0",
+  "description": "Matrix style terminal projection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Heyenbrock",
+  "license": "ISC",
+  "dependencies": {}
+}

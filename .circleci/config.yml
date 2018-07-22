@@ -4,10 +4,10 @@ aliases:
 
   - &restore_npm_cache
     keys:
-      - v1-terminal-canvas-npm-cache-{{ checksum "yarn.json" }}
+      - v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
 
   - &save_npm_cache
-    key: v1-terminal-canvas-npm-cache-{{ checksum "yarn.json" }}
+    key: v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
     paths:
       - node_modules
 
@@ -20,8 +20,8 @@ aliases:
     command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
 
   - &reset_lockfile
-    name: Reset yarn.json
-    command: git checkout yarn.json
+    name: Reset yarn.lock
+    command: git checkout yarn.lock
 
 # Defaults for node environment
 node10Environment: &node10Environment
@@ -106,7 +106,7 @@ workflows:
       - publish:
           requires:
             - build
-          filter:
+          filters:
             branches:
               only: master
   terminal-canvas-renovate:

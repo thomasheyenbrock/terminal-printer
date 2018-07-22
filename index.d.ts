@@ -160,15 +160,15 @@ type RgbData = {
 };
 
 type Pixel = {
-  v: string;
-  bg: RgbData | Color | null;
-  fg: RgbData | Color | null;
+  backgroundColor: RgbData | Color | null;
+  foregroundColor: RgbData | Color | null;
+  value: string;
 };
 
 type Update = {
   row: number;
   column: number;
-  data: Partial<Pixel>;
+  pixel: Partial<Pixel>;
 };
 
 interface CanvasInterface {
@@ -176,15 +176,18 @@ interface CanvasInterface {
   width: number;
   canvas: Pixel[][];
 
-  clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void;
+  clear(config?: {
+    backgroundColor?: RgbData | Color;
+    foregroundColor?: RgbData | Color;
+  }): void;
 
-  getPixelData(row: number, column: number): Pixel;
+  getPixel(row: number, column: number): Pixel;
 
   hideCursor(): void;
 
   print(): void;
 
-  setPixelData(row: number, column: number, data: Partial<Pixel>): void;
+  setPixel(row: number, column: number, pixel: Partial<Pixel>): void;
 
   showCursor(): void;
 
@@ -194,16 +197,16 @@ interface CanvasInterface {
     row: number,
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void;
 
   writeCenteredText(
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void;
 
@@ -212,8 +215,8 @@ interface CanvasInterface {
     column: number,
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void;
 }
@@ -228,23 +231,22 @@ declare module "terminal-canvas" {
     constructor(config: {
       height?: number;
       width?: number;
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     });
 
-    public clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void;
+    public clear(config?: {
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
+    }): void;
 
-    public getPixelData(row: number, column: number): Pixel;
+    public getPixel(row: number, column: number): Pixel;
 
     public hideCursor(): void;
 
     public print(): void;
 
-    public setPixelData(
-      row: number,
-      column: number,
-      data: Partial<Pixel>,
-    ): void;
+    public setPixel(row: number, column: number, pixel: Partial<Pixel>): void;
 
     public showCursor(): void;
 
@@ -254,16 +256,16 @@ declare module "terminal-canvas" {
       row: number,
       text: string,
       colors?: {
-        bg?: RgbData | Color;
-        fg?: RgbData | Color;
+        backgroundColor?: RgbData | Color;
+        foregroundColor?: RgbData | Color;
       },
     ): void;
 
     public writeCenteredText(
       text: string,
       colors?: {
-        bg?: RgbData | Color;
-        fg?: RgbData | Color;
+        backgroundColor?: RgbData | Color;
+        foregroundColor?: RgbData | Color;
       },
     ): void;
 
@@ -272,8 +274,8 @@ declare module "terminal-canvas" {
       column: number,
       text: string,
       colors?: {
-        bg?: RgbData | Color;
-        fg?: RgbData | Color;
+        backgroundColor?: RgbData | Color;
+        foregroundColor?: RgbData | Color;
       },
     ): void;
 

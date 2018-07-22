@@ -8,14 +8,19 @@ describe("Canvas", () => {
   let config: {
     height?: number;
     width?: number;
-    bg?: RgbData | Color;
-    fg?: RgbData | Color;
+    backgroundColor?: RgbData | Color;
+    foregroundColor?: RgbData | Color;
   };
   beforeEach(() => {
     process.stdout.rows = 11;
     process.stdout.columns = 21;
     process.stdout.write = jest.fn();
-    config = { height: 10, width: 20, bg: "Black", fg: "White" };
+    config = {
+      backgroundColor: "Black",
+      foregroundColor: "White",
+      height: 10,
+      width: 20,
+    };
     canvas = new Canvas(config);
   });
   describe("constructor", () => {
@@ -38,10 +43,10 @@ describe("Canvas", () => {
         expect(canvas.width).toBe(processColumns);
       });
       it("should use null as background color", () => {
-        expect(canvas.canvas[0][0].bg).toBeNull();
+        expect(canvas.canvas[0][0].backgroundColor).toBeNull();
       });
       it("should use null as foreground color", () => {
-        expect(canvas.canvas[0][0].fg).toBeNull();
+        expect(canvas.canvas[0][0].foregroundColor).toBeNull();
       });
     });
     it("should use the provided height", () => {
@@ -51,54 +56,58 @@ describe("Canvas", () => {
       expect(canvas.width).toBe(config.width);
     });
     it("should use the provided background color", () => {
-      expect(canvas.canvas[0][0].bg).toBe(config.bg);
+      expect(canvas.canvas[0][0].backgroundColor).toBe(config.backgroundColor);
     });
     it("should use the provided foreground color", () => {
-      expect(canvas.canvas[0][0].fg).toBe(config.fg);
+      expect(canvas.canvas[0][0].foregroundColor).toBe(config.foregroundColor);
     });
     it("should use empty strings as values", () => {
-      expect(canvas.canvas[0][0].v).toBe(" ");
+      expect(canvas.canvas[0][0].value).toBe(" ");
     });
   });
   describe("clear", () => {
     beforeEach(() => {
-      canvas.setPixelData = jest.fn();
+      canvas.setPixel = jest.fn();
     });
-    it("should call setPixelData for each pixel", () => {
+    it("should call setPixel for each pixel", () => {
       canvas.clear();
-      expect(canvas.setPixelData).toHaveBeenCalledTimes(
+      expect(canvas.setPixel).toHaveBeenCalledTimes(
         canvas.height * canvas.width,
       );
-      expect((canvas.setPixelData as jest.Mock).mock.calls[0]).toEqual([
+      expect((canvas.setPixel as jest.Mock).mock.calls[0]).toEqual([
         0,
         0,
-        { bg: null, fg: null, v: " " },
+        { backgroundColor: null, foregroundColor: null, value: " " },
       ]);
     });
     it("should be able to set background color", () => {
-      canvas.clear({ bg: "PaleVioletRed" });
-      expect((canvas.setPixelData as jest.Mock).mock.calls[0]).toEqual([
+      canvas.clear({ backgroundColor: "PaleVioletRed" });
+      expect((canvas.setPixel as jest.Mock).mock.calls[0]).toEqual([
         0,
         0,
-        { bg: "PaleVioletRed", fg: null, v: " " },
+        { backgroundColor: "PaleVioletRed", foregroundColor: null, value: " " },
       ]);
     });
     it("should be able to set foreground color", () => {
-      canvas.clear({ fg: "PaleVioletRed" });
-      expect((canvas.setPixelData as jest.Mock).mock.calls[0]).toEqual([
+      canvas.clear({ foregroundColor: "PaleVioletRed" });
+      expect((canvas.setPixel as jest.Mock).mock.calls[0]).toEqual([
         0,
         0,
-        { bg: null, fg: "PaleVioletRed", v: " " },
+        { backgroundColor: null, foregroundColor: "PaleVioletRed", value: " " },
       ]);
     });
   });
-  describe("getPixelData", () => {
-    const somePixelData: Pixel = { bg: "PaleVioletRed", fg: "Olive", v: "*" };
+  describe("getPixel", () => {
+    const somePixel: Pixel = {
+      backgroundColor: "PaleVioletRed",
+      foregroundColor: "Olive",
+      value: "*",
+    };
     beforeEach(() => {
-      canvas.canvas[1][2] = somePixelData;
+      canvas.canvas[1][2] = somePixel;
     });
-    it("should return the correct pixel data", () => {
-      expect(canvas.getPixelData(1, 2)).toEqual(somePixelData);
+    it("should return the correct pixel", () => {
+      expect(canvas.getPixel(1, 2)).toEqual(somePixel);
     });
   });
   describe("hideCursor", () => {
@@ -115,22 +124,30 @@ describe("Canvas", () => {
       expect((process.stdout.write as jest.Mock).mock.calls).toMatchSnapshot();
     });
   });
-  describe("setPixelData", () => {
-    it("should work with partial pixel data", () => {
-      canvas.setPixelData(1, 2, {});
-      expect(canvas.canvas[1][2]).toEqual({ bg: "Black", fg: "White", v: " " });
+  describe("setPixel", () => {
+    it("should work with partial pixel", () => {
+      canvas.setPixel(1, 2, {});
+      expect(canvas.canvas[1][2]).toEqual({
+        backgroundColor: "Black",
+        foregroundColor: "White",
+        value: " ",
+      });
     });
-    it("should work with complete pixel data", () => {
-      const pixel: Pixel = { bg: "PaleVioletRed", fg: "Olive", v: "*" };
-      canvas.setPixelData(1, 2, pixel);
+    it("should work with complete pixel", () => {
+      const pixel: Pixel = {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "*",
+      };
+      canvas.setPixel(1, 2, pixel);
       expect(canvas.canvas[1][2]).toEqual(pixel);
     });
     it("should throw an error for a value with lenght of zero", () => {
-      expect(() => canvas.setPixelData(1, 2, { v: "" })).toThrowError();
+      expect(() => canvas.setPixel(1, 2, { value: "" })).toThrowError();
     });
     it("should throw an error for a value with lenght greater than", () => {
       expect(() =>
-        canvas.setPixelData(1, 2, { v: "this is too long!" }),
+        canvas.setPixel(1, 2, { value: "this is too long!" }),
       ).toThrowError();
     });
   });
@@ -143,19 +160,39 @@ describe("Canvas", () => {
   });
   describe("update", () => {
     it("should print the expected string", () => {
-      canvas.setPixelData(3, 5, { v: "*" });
-      canvas.setPixelData(3, 1, { v: "a" });
-      canvas.setPixelData(3, 2, { v: "b" });
-      canvas.setPixelData(1, 2, { bg: "PaleVioletRed", fg: "Olive", v: "*" });
-      canvas.setPixelData(3, 5, { bg: "White", fg: "Black", v: "\\" });
-      canvas.setPixelData(3, 6, { bg: "White", fg: "Black", v: "/" });
+      canvas.setPixel(3, 5, { value: "*" });
+      canvas.setPixel(3, 1, { value: "a" });
+      canvas.setPixel(3, 2, { value: "b" });
+      canvas.setPixel(1, 2, {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "*",
+      });
+      canvas.setPixel(3, 5, {
+        backgroundColor: "White",
+        foregroundColor: "Black",
+        value: "\\",
+      });
+      canvas.setPixel(3, 6, {
+        backgroundColor: "White",
+        foregroundColor: "Black",
+        value: "/",
+      });
+      canvas.update();
+      expect((process.stdout.write as jest.Mock).mock.calls).toMatchSnapshot();
+    });
+    it("should print the expected string when the first pixel has no colors", () => {
+      canvas.setPixel(1, 2, { value: "*" });
       canvas.update();
       expect((process.stdout.write as jest.Mock).mock.calls).toMatchSnapshot();
     });
   });
   describe("writeCenteredRow", () => {
     const text = "foobar";
-    const colors = { bg: "PaleVioletRed" as Color, fg: "Olive" as Color };
+    const colors = {
+      backgroundColor: "PaleVioletRed" as Color,
+      foregroundColor: "Olive" as Color,
+    };
     beforeEach(() => {
       canvas.writeRow = jest.fn();
     });
@@ -172,7 +209,10 @@ describe("Canvas", () => {
   });
   describe("writeCenteredText", () => {
     const text = "foo\nbar";
-    const colors = { bg: "PaleVioletRed" as Color, fg: "Olive" as Color };
+    const colors = {
+      backgroundColor: "PaleVioletRed" as Color,
+      foregroundColor: "Olive" as Color,
+    };
     beforeEach(() => {
       canvas.writeCenteredRow = jest.fn();
     });
@@ -191,55 +231,58 @@ describe("Canvas", () => {
   });
   describe("writeRow", () => {
     const text = "foo";
-    const colors = { bg: "PaleVioletRed" as Color, fg: "Olive" as Color };
+    const colors = {
+      backgroundColor: "PaleVioletRed" as Color,
+      foregroundColor: "Olive" as Color,
+    };
     beforeEach(() => {
-      canvas.setPixelData = jest.fn();
+      canvas.setPixel = jest.fn();
     });
-    it("should invoke setPixelData correctly without colors", () => {
+    it("should invoke setPixel correctly without colors", () => {
       canvas.writeRow(2, 3, text);
-      expect(canvas.setPixelData).toHaveBeenCalledTimes(3);
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 3, {
-        bg: null,
-        fg: null,
-        v: "f",
+      expect(canvas.setPixel).toHaveBeenCalledTimes(3);
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 3, {
+        backgroundColor: null,
+        foregroundColor: null,
+        value: "f",
       });
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 4, {
-        bg: null,
-        fg: null,
-        v: "o",
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 4, {
+        backgroundColor: null,
+        foregroundColor: null,
+        value: "o",
       });
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 5, {
-        bg: null,
-        fg: null,
-        v: "o",
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 5, {
+        backgroundColor: null,
+        foregroundColor: null,
+        value: "o",
       });
     });
-    it("should invoke setPixelData correctly with colors", () => {
+    it("should invoke setPixel correctly with colors", () => {
       canvas.writeRow(2, 3, text, colors);
-      expect(canvas.setPixelData).toHaveBeenCalledTimes(3);
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 3, {
-        bg: "PaleVioletRed",
-        fg: "Olive",
-        v: "f",
+      expect(canvas.setPixel).toHaveBeenCalledTimes(3);
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 3, {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "f",
       });
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 4, {
-        bg: "PaleVioletRed",
-        fg: "Olive",
-        v: "o",
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 4, {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "o",
       });
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 5, {
-        bg: "PaleVioletRed",
-        fg: "Olive",
-        v: "o",
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 5, {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "o",
       });
     });
     it("should handle string that is too long for row", () => {
       canvas.writeRow(2, 19, text, colors);
-      expect(canvas.setPixelData).toHaveBeenCalledTimes(1);
-      expect(canvas.setPixelData).toHaveBeenCalledWith(2, 19, {
-        bg: "PaleVioletRed",
-        fg: "Olive",
-        v: "f",
+      expect(canvas.setPixel).toHaveBeenCalledTimes(1);
+      expect(canvas.setPixel).toHaveBeenCalledWith(2, 19, {
+        backgroundColor: "PaleVioletRed",
+        foregroundColor: "Olive",
+        value: "f",
       });
     });
   });

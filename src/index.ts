@@ -9,8 +9,8 @@ export class Canvas implements CanvasInterface {
   constructor(config?: {
     height?: number;
     width?: number;
-    bg?: RgbData | Color;
-    fg?: RgbData | Color;
+    backgroundColor?: RgbData | Color;
+    foregroundColor?: RgbData | Color;
   }) {
     if (
       (!config || !config.height) &&
@@ -38,26 +38,33 @@ export class Canvas implements CanvasInterface {
 
     this.canvas = Array.from({ length: this.height }).map(_ =>
       Array.from({ length: this.width }).map(__ => ({
-        bg: (config && config.bg) || null,
-        fg: (config && config.fg) || null,
-        v: " ",
+        backgroundColor: (config && config.backgroundColor) || null,
+        foregroundColor: (config && config.foregroundColor) || null,
+        value: " ",
       })),
     );
     this.updateBuffer = [];
   }
 
-  public clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void {
-    const bg = (config && config.bg) || null;
-    const fg = (config && config.fg) || null;
+  public clear(config?: {
+    backgroundColor?: RgbData | Color;
+    foregroundColor?: RgbData | Color;
+  }): void {
+    const backgroundColor = (config && config.backgroundColor) || null;
+    const foregroundColor = (config && config.foregroundColor) || null;
 
     Array.from({ length: this.height }).forEach((_, i) => {
       Array.from({ length: this.width }).forEach((__, j) => {
-        this.setPixelData(i, j, { v: " ", bg, fg });
+        this.setPixel(i, j, {
+          backgroundColor,
+          foregroundColor,
+          value: " ",
+        });
       });
     });
   }
 
-  public getPixelData(row: number, column: number): Pixel {
+  public getPixel(row: number, column: number): Pixel {
     return this.canvas[row][column];
   }
 
@@ -71,10 +78,12 @@ export class Canvas implements CanvasInterface {
         row
           .map(
             cell =>
-              `${getTerminalColor("fg", cell.fg)}${getTerminalColor(
-                "bg",
-                cell.bg,
-              )}${cell.v}`,
+              `${getTerminalColor(
+                "foreground",
+                cell.foregroundColor,
+              )}${getTerminalColor("background", cell.backgroundColor)}${
+                cell.value
+              }`,
           )
           .join(""),
       )
@@ -84,8 +93,8 @@ export class Canvas implements CanvasInterface {
     process.stdout.write(print);
   }
 
-  public setPixelData(row: number, column: number, data: Partial<Pixel>): void {
-    if (typeof data.v === "string" && data.v.length !== 1) {
+  public setPixel(row: number, column: number, pixel: Partial<Pixel>): void {
+    if (typeof pixel.value === "string" && pixel.value.length !== 1) {
       throw new Error(
         "Can't set values for a single pixel that have a length which is " +
           "not equal to 1.",
@@ -94,7 +103,7 @@ export class Canvas implements CanvasInterface {
 
     this.canvas[row][column] = {
       ...this.canvas[row][column],
-      ...data,
+      ...pixel,
     };
 
     const elementInUpdateBuffer = this.updateBuffer.findIndex(
@@ -103,19 +112,19 @@ export class Canvas implements CanvasInterface {
     if (elementInUpdateBuffer < 0) {
       this.updateBuffer.push({
         column,
-        data: {
-          bg: data.bg || null,
-          fg: data.fg || null,
-          v: data.v || this.canvas[row][column].v,
+        pixel: {
+          backgroundColor: pixel.backgroundColor || null,
+          foregroundColor: pixel.foregroundColor || null,
+          value: pixel.value || this.canvas[row][column].value,
         },
         row,
       });
     } else {
       this.updateBuffer.splice(elementInUpdateBuffer, 1, {
         column,
-        data: {
-          ...this.updateBuffer[elementInUpdateBuffer].data,
-          ...data,
+        pixel: {
+          ...this.updateBuffer[elementInUpdateBuffer].pixel,
+          ...pixel,
         },
         row,
       });
@@ -137,12 +146,12 @@ export class Canvas implements CanvasInterface {
           newUpdateString += `\x1b[${updateElement.row +
             1};${updateElement.column + 1}H`;
           newUpdateString += getTerminalColor(
-            "bg",
-            updateElement.data.bg || null,
+            "background",
+            updateElement.pixel.backgroundColor || null,
           );
           newUpdateString += getTerminalColor(
-            "fg",
-            updateElement.data.fg || null,
+            "foreground",
+            updateElement.pixel.foregroundColor || null,
           );
         } else {
           // write position (if necessary)
@@ -175,39 +184,39 @@ export class Canvas implements CanvasInterface {
           // write background color (if necessary)
           if (
             !this.equalColors(
-              previousElement.data.bg || null,
-              updateElement.data.bg || null,
+              previousElement.pixel.backgroundColor || null,
+              updateElement.pixel.backgroundColor || null,
             )
           ) {
             newUpdateString += getTerminalColor(
-              "bg",
-              updateElement.data.bg || null,
+              "background",
+              updateElement.pixel.backgroundColor || null,
             );
           }
 
           // write foreground color (if necessary)
           if (
             !this.equalColors(
-              previousElement.data.fg || null,
-              updateElement.data.fg || null,
+              previousElement.pixel.foregroundColor || null,
+              updateElement.pixel.foregroundColor || null,
             )
           ) {
             newUpdateString += getTerminalColor(
-              "fg",
-              updateElement.data.fg || null,
+              "foreground",
+              updateElement.pixel.foregroundColor || null,
             );
           }
         }
 
         // write value
-        newUpdateString += updateElement.data.v;
+        newUpdateString += updateElement.pixel.value;
 
         return newUpdateString;
       },
       "",
     );
 
-    setTimeout(() => process.stdout.write(updateString), 0);
+    process.stdout.write(updateString);
 
     this.updateBuffer = [];
   }
@@ -216,8 +225,8 @@ export class Canvas implements CanvasInterface {
     row: number,
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void {
     this.writeRow(
@@ -231,8 +240,8 @@ export class Canvas implements CanvasInterface {
   public writeCenteredText(
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void {
     const textArray = text.split("\n");
@@ -248,19 +257,19 @@ export class Canvas implements CanvasInterface {
     column: number,
     text: string,
     colors?: {
-      bg?: RgbData | Color;
-      fg?: RgbData | Color;
+      backgroundColor?: RgbData | Color;
+      foregroundColor?: RgbData | Color;
     },
   ): void {
-    const bg = (colors && colors.bg) || null;
-    const fg = (colors && colors.fg) || null;
+    const backgroundColor = (colors && colors.backgroundColor) || null;
+    const foregroundColor = (colors && colors.foregroundColor) || null;
 
-    text.split("").forEach((v, index) => {
+    text.split("").forEach((value, index) => {
       if (column + index < this.width) {
-        this.setPixelData(row, column + index, {
-          bg,
-          fg,
-          v,
+        this.setPixel(row, column + index, {
+          backgroundColor,
+          foregroundColor,
+          value,
         });
       }
     });
@@ -277,7 +286,8 @@ export class Canvas implements CanvasInterface {
       return false;
     }
     return (
-      getTerminalColor("fg", firstColor) === getTerminalColor("fg", secondColor)
+      getTerminalColor("foreground", firstColor) ===
+      getTerminalColor("foreground", secondColor)
     );
   }
 

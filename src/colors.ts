@@ -166,7 +166,7 @@ export const getRgbFromHex = (hex: ColorValue): RgbData => ({
 });
 
 export const getTerminalColor = (
-  type: "fg" | "bg",
+  type: "foreground" | "background",
   color: Color | RgbData | null,
 ): string => {
   if (color === null) {
@@ -175,5 +175,7 @@ export const getTerminalColor = (
 
   const rgb = typeof color === "string" ? getRgbFromHex(toHex(color)) : color;
 
-  return `\x1b[${type === "fg" ? "3" : "4"}8;2;${rgb.r};${rgb.g};${rgb.b}m`;
+  return `\x1b[${type === "foreground" ? "3" : "4"}8;2;${rgb.r};${rgb.g};${
+    rgb.b
+  }m`;
 };

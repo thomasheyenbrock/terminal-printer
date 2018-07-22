@@ -11,7 +11,7 @@ describe("colors", () => {
     });
   });
   describe("getTerminalColor", () => {
-    describe.each([["fg", "3"], ["bg", "4"]])(
+    describe.each([["foreground", "3"], ["background", "4"]])(
       "color for %s",
       (type, expectedNumber) => {
         it("should return nothing when no color is passed", () => {

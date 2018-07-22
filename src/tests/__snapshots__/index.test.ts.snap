@@ -18,3 +18,11 @@ Array [
   ],
 ]
 `;
+
+exports[`Canvas update should print the expected string when the first pixel has no colors 1`] = `
+Array [
+  Array [
+    "[2;3H*",
+  ],
+]
+`;

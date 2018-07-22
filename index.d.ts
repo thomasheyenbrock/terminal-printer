@@ -171,21 +171,68 @@ type Update = {
   data: Pixel;
 };
 
+interface CanvasInterface {
+  height: number;
+  width: number;
+  canvas: Pixel[][];
+
+  clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void;
+
+  getPixelData(row: number, column: number): Pixel;
+
+  hideCursor(): void;
+
+  print(): void;
+
+  setPixelData(row: number, column: number, data: Pixel): void;
+
+  showCursor(): void;
+
+  update(): void;
+
+  writeCenteredRow(
+    row: number,
+    text: string,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
+  ): void;
+
+  writeCenteredText(
+    text: string,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
+  ): void;
+
+  writeRow(
+    row: number,
+    column: number,
+    text: string,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
+  ): void;
+}
+
 declare module "terminal-canvas" {
-  export class Canvas {
-    height: number;
+  export class Canvas implements CanvasInterface {
+    public height: number;
     public width: number;
     public canvas: Pixel[][];
     private updateBuffer: Update[];
 
-    constructor(
-      height: number,
-      width: number,
-      bg: RgbData | Color,
-      fg: RgbData | Color,
-    );
+    constructor(config: {
+      height?: number;
+      width?: number;
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    });
 
-    public clear(bg: RgbData | Color | null, fg: RgbData | Color | null): void;
+    public clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void;
 
     public getPixelData(row: number, column: number): Pixel;
 
@@ -202,22 +249,28 @@ declare module "terminal-canvas" {
     public writeCenteredRow(
       row: number,
       text: string,
-      bg?: RgbData | Color,
-      fg?: RgbData | Color,
+      colors?: {
+        bg?: RgbData | Color;
+        fg?: RgbData | Color;
+      },
     ): void;
 
     public writeCenteredText(
       text: string,
-      bg?: RgbData | Color,
-      fg?: RgbData | Color,
+      colors?: {
+        bg?: RgbData | Color;
+        fg?: RgbData | Color;
+      },
     ): void;
 
     public writeRow(
       row: number,
       column: number,
       text: string,
-      bg?: RgbData | Color,
-      fg?: RgbData | Color,
+      colors?: {
+        bg?: RgbData | Color;
+        fg?: RgbData | Color;
+      },
     ): void;
 
     private equalColors(

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "target": "es5",
+    "module": "umd",
+    "sourceMap": true,
+    "strict": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "lib": ["es5", "es6", "es7", "es2017", "esnext.asynciterable"],
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "app",
+    "types": ["jest", "node"],
+    "paths": {
+      "*": [
+        "*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,36 +1,60 @@
 import { getTerminalColor } from "./colors";
 
-export class Canvas {
-  height: number;
+export class Canvas implements CanvasInterface {
+  public height: number;
   public width: number;
   public canvas: Pixel[][];
   private updateBuffer: Update[];
 
-  constructor(
-    height: number,
-    width: number,
-    bg: RgbData | Color,
-    fg: RgbData | Color,
-  ) {
-    this.height = height;
-    this.width = width;
+  constructor(config?: {
+    height?: number;
+    width?: number;
+    bg?: RgbData | Color;
+    fg?: RgbData | Color;
+  }) {
+    if (
+      (!config || !config.height) &&
+      typeof process.stdout.rows !== "number"
+    ) {
+      throw new Error(
+        "Could not fall back to a default height, because " +
+          "'process.stdout.rows' is no number. You have to " +
+          "specify 'height' when calling the constructor.",
+      );
+    }
+    if (
+      (!config || !config.width) &&
+      typeof process.stdout.columns !== "number"
+    ) {
+      throw new Error(
+        "Could not fall back to a default width, because " +
+          "'process.stdout.columns' is no number. You have to " +
+          "specify 'width' when calling the constructor.",
+      );
+    }
+
+    this.height = (config && config.height) || process.stdout.rows!;
+    this.width = (config && config.width) || process.stdout.columns!;
 
     this.canvas = Array.from({ length: this.height }).map(_ =>
       Array.from({ length: this.width }).map(__ => ({
-        bg: bg || null,
-        fg: fg || null,
+        bg: (config && config.bg) || null,
+        fg: (config && config.fg) || null,
         v: " ",
       })),
     );
     this.updateBuffer = [];
   }
 
-  public clear(bg: RgbData | Color | null, fg: RgbData | Color | null): void {
-    for (let i = 0; i < this.height; i += 1) {
-      for (let j = 0; j < this.width; j += 1) {
+  public clear(config?: { bg?: RgbData | Color; fg?: RgbData | Color }): void {
+    const bg = (config && config.bg) || null;
+    const fg = (config && config.fg) || null;
+
+    Array.from({ length: this.height }).forEach((_, i) => {
+      Array.from({ length: this.width }).forEach((__, j) => {
         this.setPixelData(i, j, { v: " ", bg, fg });
-      }
-    }
+      });
+    });
   }
 
   public getPixelData(row: number, column: number): Pixel {
@@ -47,9 +71,10 @@ export class Canvas {
         row
           .map(
             cell =>
-              `${cell.fg ? getTerminalColor("fg", cell.fg) : ""}${
-                cell.bg ? getTerminalColor("bg", cell.bg) : ""
-              }${cell.v}`,
+              `${getTerminalColor("fg", cell.fg)}${getTerminalColor(
+                "bg",
+                cell.bg,
+              )}${cell.v}`,
           )
           .join(""),
       )
@@ -59,14 +84,30 @@ export class Canvas {
     process.stdout.write(print);
   }
 
-  public setPixelData(row: number, column: number, data: Pixel): void {
+  public setPixelData(row: number, column: number, data: Partial<Pixel>): void {
+    if (typeof data.v === "string" && data.v.length !== 1) {
+      throw new Error(
+        "Can't set values for a single pixel that have a length which is " +
+          "not equal to 1.",
+      );
+    }
+
+    this.canvas[row][column] = {
+      ...this.canvas[row][column],
+      ...data,
+    };
+
     const elementInUpdateBuffer = this.updateBuffer.findIndex(
       update => update.row === row && update.column === column,
     );
     if (elementInUpdateBuffer < 0) {
       this.updateBuffer.push({
         column,
-        data,
+        data: {
+          bg: data.bg || null,
+          fg: data.fg || null,
+          v: data.v || " ",
+        },
         row,
       });
     } else {
@@ -156,28 +197,31 @@ export class Canvas {
   public writeCenteredRow(
     row: number,
     text: string,
-    bg?: RgbData | Color,
-    fg?: RgbData | Color,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
   ): void {
     this.writeRow(
       row,
-      Math.round((this.width - text.length) / 2),
+      Math.floor((this.width - text.length) / 2),
       text,
-      bg,
-      fg,
+      colors,
     );
   }
 
   public writeCenteredText(
     text: string,
-    bg?: RgbData | Color,
-    fg?: RgbData | Color,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
   ): void {
     const textArray = text.split("\n");
-    const firstRow = Math.round((this.height - textArray.length) / 2);
+    const firstRow = Math.floor((this.height - textArray.length) / 2);
 
     textArray.forEach((string, index) => {
-      this.writeCenteredRow(firstRow + index, string, bg, fg);
+      this.writeCenteredRow(firstRow + index, string, colors);
     });
   }
 
@@ -185,14 +229,19 @@ export class Canvas {
     row: number,
     column: number,
     text: string,
-    bg?: RgbData | Color,
-    fg?: RgbData | Color,
+    colors?: {
+      bg?: RgbData | Color;
+      fg?: RgbData | Color;
+    },
   ): void {
+    const bg = (colors && colors.bg) || null;
+    const fg = (colors && colors.fg) || null;
+
     text.split("").forEach((v, index) => {
       if (column + index < this.width) {
         this.setPixelData(row, column + index, {
-          bg: bg || null,
-          fg: fg || null,
+          bg,
+          fg,
           v,
         });
       }
@@ -224,6 +273,7 @@ export class Canvas {
         ) {
           return -1;
         }
+        /* istanbul ignore else */
         if (
           firstElement.row > secondElement.row ||
           (firstElement.row === secondElement.row &&
@@ -231,6 +281,7 @@ export class Canvas {
         ) {
           return 1;
         }
+        /* istanbul ignore next */
         return 0;
       },
     );

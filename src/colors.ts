@@ -1,4 +1,4 @@
-const colors: ColorMapping = {
+export const colors: ColorMapping = {
   AliceBlue: "#F0F8FF",
   AntiqueWhite: "#FAEBD7",
   Aqua: "#00FFFF",
@@ -149,7 +149,7 @@ const colors: ColorMapping = {
   YellowGreen: "#9ACD32",
 };
 
-const toHex = (name: Color): ColorValue => {
+export const toHex = (name: Color): ColorValue => {
   const color = colors[name];
 
   if (!color) {

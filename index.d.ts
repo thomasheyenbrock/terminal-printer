@@ -174,9 +174,8 @@ type Update = {
 interface CanvasInterface {
   height: number;
   width: number;
-  canvas: Pixel[][];
 
-  clear(config?: {
+  clear(colors?: {
     backgroundColor?: RgbData | Color;
     foregroundColor?: RgbData | Color;
   }): void;
@@ -225,7 +224,7 @@ declare module "terminal-canvas" {
   export class Canvas implements CanvasInterface {
     public height: number;
     public width: number;
-    public canvas: Pixel[][];
+    private canvas: Pixel[][];
     private updateBuffer: Update[];
 
     constructor(config?: {
@@ -235,7 +234,7 @@ declare module "terminal-canvas" {
       foregroundColor?: RgbData | Color;
     });
 
-    public clear(config?: {
+    public clear(colors?: {
       backgroundColor?: RgbData | Color;
       foregroundColor?: RgbData | Color;
     }): void;

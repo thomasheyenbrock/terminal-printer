@@ -43,10 +43,10 @@ describe("Canvas", () => {
         expect(canvas.width).toBe(processColumns);
       });
       it("should use null as background color", () => {
-        expect(canvas.canvas[0][0].backgroundColor).toBeNull();
+        expect(canvas.getPixel(0, 0).backgroundColor).toBeNull();
       });
       it("should use null as foreground color", () => {
-        expect(canvas.canvas[0][0].foregroundColor).toBeNull();
+        expect(canvas.getPixel(0, 0).foregroundColor).toBeNull();
       });
     });
     it("should use the provided height", () => {
@@ -56,13 +56,17 @@ describe("Canvas", () => {
       expect(canvas.width).toBe(config.width);
     });
     it("should use the provided background color", () => {
-      expect(canvas.canvas[0][0].backgroundColor).toBe(config.backgroundColor);
+      expect(canvas.getPixel(0, 0).backgroundColor).toBe(
+        config.backgroundColor,
+      );
     });
     it("should use the provided foreground color", () => {
-      expect(canvas.canvas[0][0].foregroundColor).toBe(config.foregroundColor);
+      expect(canvas.getPixel(0, 0).foregroundColor).toBe(
+        config.foregroundColor,
+      );
     });
     it("should use empty strings as values", () => {
-      expect(canvas.canvas[0][0].value).toBe(" ");
+      expect(canvas.getPixel(0, 0).value).toBe(" ");
     });
   });
   describe("clear", () => {
@@ -104,7 +108,7 @@ describe("Canvas", () => {
       value: "*",
     };
     beforeEach(() => {
-      canvas.canvas[1][2] = somePixel;
+      canvas.setPixel(1, 2, somePixel);
     });
     it("should return the correct pixel", () => {
       expect(canvas.getPixel(1, 2)).toEqual(somePixel);
@@ -127,7 +131,7 @@ describe("Canvas", () => {
   describe("setPixel", () => {
     it("should work with partial pixel", () => {
       canvas.setPixel(1, 2, {});
-      expect(canvas.canvas[1][2]).toEqual({
+      expect(canvas.getPixel(1, 2)).toEqual({
         backgroundColor: "Black",
         foregroundColor: "White",
         value: " ",
@@ -140,7 +144,7 @@ describe("Canvas", () => {
         value: "*",
       };
       canvas.setPixel(1, 2, pixel);
-      expect(canvas.canvas[1][2]).toEqual(pixel);
+      expect(canvas.getPixel(1, 2)).toEqual(pixel);
     });
     it("should throw an error for a value with lenght of zero", () => {
       expect(() => canvas.setPixel(1, 2, { value: "" })).toThrowError();

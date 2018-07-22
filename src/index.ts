@@ -3,7 +3,7 @@ import { getTerminalColor } from "./colors";
 export class Canvas implements CanvasInterface {
   public height: number;
   public width: number;
-  public canvas: Pixel[][];
+  private canvas: Pixel[][];
   private updateBuffer: Update[];
 
   constructor(config?: {
@@ -46,12 +46,12 @@ export class Canvas implements CanvasInterface {
     this.updateBuffer = [];
   }
 
-  public clear(config?: {
+  public clear(colors?: {
     backgroundColor?: RgbData | Color;
     foregroundColor?: RgbData | Color;
   }): void {
-    const backgroundColor = (config && config.backgroundColor) || null;
-    const foregroundColor = (config && config.foregroundColor) || null;
+    const backgroundColor = (colors && colors.backgroundColor) || null;
+    const foregroundColor = (colors && colors.foregroundColor) || null;
 
     Array.from({ length: this.height }).forEach((_, i) => {
       Array.from({ length: this.width }).forEach((__, j) => {

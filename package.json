@@ -11,6 +11,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write **/*.ts",
     "publish": "semantic-release",
+    "renovate": "renovate",
     "start": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
@@ -26,6 +27,7 @@
     "jest": "^23.4.1",
     "lint-staged": "^7.2.0",
     "prettier": "^1.13.7",
+    "renovate": "^13.30.0",
     "semantic-release": "^15.8.1",
     "ts-jest": "^23.0.1",
     "tslint": "^5.11.0",
@@ -67,5 +69,13 @@
   },
   "prettier": {
     "trailingComma": "all"
+  },
+  "renovate": {
+    "automerge": true,
+    "automergeType": "branch-push",
+    "requiredStatusChecks": null,
+    "major": {
+      "automerge": false
+    }
   }
 }

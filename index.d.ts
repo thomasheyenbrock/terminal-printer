@@ -228,7 +228,7 @@ declare module "terminal-canvas" {
     public canvas: Pixel[][];
     private updateBuffer: Update[];
 
-    constructor(config: {
+    constructor(config?: {
       height?: number;
       width?: number;
       backgroundColor?: RgbData | Color;

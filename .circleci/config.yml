@@ -1,0 +1,101 @@
+# Aliases for reuse
+aliases:
+  - &working_directory ~/terminal-canvas
+
+  - &restore_npm_cache
+    keys:
+      - v1-terminal-canvas-npm-cache-{{ checksum "yarn.json" }}
+
+  - &save_npm_cache
+    key: v1-terminal-canvas-npm-cache-{{ checksum "yarn.json" }}
+    paths:
+      - node_modules
+
+  - &install
+    name: Installing
+    command: yarn
+
+  - &npm_auth_token
+    name: Configure Circle to add the authToken to ~/.npmrc
+    command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+
+  - &reset_lockfile
+    name: Reset yarn.json
+    command: git checkout yarn.json
+
+# Defaults for node environment
+node10Environment: &node10Environment
+  docker:
+    - image: circleci/node:10
+  working_directory: *working_directory
+
+version: 2
+jobs:
+  install:
+    <<: *node10Environment
+    steps:
+      - checkout
+      - restore-cache: *restore_npm_cache
+      - run: *npm_auth_token
+      - run: *install
+      - run: *reset_lockfile
+      - save-cache: *save_npm_cache
+  lint:
+    <<: *node10Environment
+    steps:
+      - checkout
+      - restore-cache: *restore_npm_cache
+      - run:
+          name: "Linting"
+          command: "yarn lint"
+  test:
+    <<: *node10Environment
+    steps:
+      - checkout
+      - restore-cache: *restore_npm_cache
+      - run:
+          name: "Testing"
+          command: "yarn test"
+  build:
+    <<: *node10Environment
+    steps:
+      - checkout
+      - restore-cache: *restore_npm_cache
+      - run:
+          name: Building
+          command: yarn build
+      - persist_to_workspace:
+          root: *working_directory
+          paths:
+            - dist/*
+  publish:
+    <<: *node10Environment
+    steps:
+      - checkout
+      - attach_workspace:
+          at: *working_directory
+      - run:
+          name: Publishing
+          command: yarn publish
+
+workflows:
+  version: 2
+  terminal-canvas-workflow:
+    jobs:
+      - install
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - build:
+          requires:
+            - lint
+            - test
+      - publish:
+          requires:
+            - build
+          filter:
+            branches:
+              only: master

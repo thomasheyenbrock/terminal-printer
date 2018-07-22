@@ -223,7 +223,7 @@ canvas.writeCenteredText("Hello world!\nThis is the next row...", {
 canvas.writeCenteredText("Only one row in the end...works just as well!");
 ```
 
-#### writeText
+#### writeRow
 
 This method writes some text into a specific row of the canvas. You can also choose in which column to start writing. The first argument is the number of the row, the second the column number and the third is the text. In an optional fourth argument you can specify back- and foreground colors. It does not return anyting:
 

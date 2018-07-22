@@ -106,7 +106,7 @@ export class Canvas implements CanvasInterface {
         data: {
           bg: data.bg || null,
           fg: data.fg || null,
-          v: data.v || " ",
+          v: data.v || this.canvas[row][column].v,
         },
         row,
       });
@@ -114,9 +114,9 @@ export class Canvas implements CanvasInterface {
       this.updateBuffer.splice(elementInUpdateBuffer, 1, {
         column,
         data: {
-          ...this.updateBuffer[elementInUpdateBuffer],
+          ...this.updateBuffer[elementInUpdateBuffer].data,
           ...data,
-        } as Pixel,
+        },
         row,
       });
     }
@@ -136,8 +136,14 @@ export class Canvas implements CanvasInterface {
           // this element is the first, so write position and both colors
           newUpdateString += `\x1b[${updateElement.row +
             1};${updateElement.column + 1}H`;
-          newUpdateString += getTerminalColor("bg", updateElement.data.bg);
-          newUpdateString += getTerminalColor("fg", updateElement.data.fg);
+          newUpdateString += getTerminalColor(
+            "bg",
+            updateElement.data.bg || null,
+          );
+          newUpdateString += getTerminalColor(
+            "fg",
+            updateElement.data.fg || null,
+          );
         } else {
           // write position (if necessary)
           const previousElement = this.updateBuffer[index - 1];
@@ -168,16 +174,28 @@ export class Canvas implements CanvasInterface {
 
           // write background color (if necessary)
           if (
-            !this.equalColors(previousElement.data.bg, updateElement.data.bg)
+            !this.equalColors(
+              previousElement.data.bg || null,
+              updateElement.data.bg || null,
+            )
           ) {
-            newUpdateString += getTerminalColor("bg", updateElement.data.bg);
+            newUpdateString += getTerminalColor(
+              "bg",
+              updateElement.data.bg || null,
+            );
           }
 
           // write foreground color (if necessary)
           if (
-            !this.equalColors(previousElement.data.fg, updateElement.data.fg)
+            !this.equalColors(
+              previousElement.data.fg || null,
+              updateElement.data.fg || null,
+            )
           ) {
-            newUpdateString += getTerminalColor("fg", updateElement.data.fg);
+            newUpdateString += getTerminalColor(
+              "fg",
+              updateElement.data.fg || null,
+            );
           }
         }
 
@@ -189,7 +207,7 @@ export class Canvas implements CanvasInterface {
       "",
     );
 
-    process.stdout.write(updateString);
+    setTimeout(() => process.stdout.write(updateString), 0);
 
     this.updateBuffer = [];
   }

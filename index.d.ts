@@ -168,7 +168,7 @@ type Pixel = {
 type Update = {
   row: number;
   column: number;
-  data: Pixel;
+  data: Partial<Pixel>;
 };
 
 interface CanvasInterface {
@@ -184,7 +184,7 @@ interface CanvasInterface {
 
   print(): void;
 
-  setPixelData(row: number, column: number, data: Pixel): void;
+  setPixelData(row: number, column: number, data: Partial<Pixel>): void;
 
   showCursor(): void;
 
@@ -240,7 +240,11 @@ declare module "terminal-canvas" {
 
     public print(): void;
 
-    public setPixelData(row: number, column: number, data: Pixel): void;
+    public setPixelData(
+      row: number,
+      column: number,
+      data: Partial<Pixel>,
+    ): void;
 
     public showCursor(): void;
 

@@ -96,8 +96,8 @@ const charset = [
   "\u2CDE"
 ];
 
-export const randomCharacter = () =>
+export const getRandomCharacter = () =>
   charset[Math.floor(Math.random() * charset.length)];
 
-export const randomCharacterArray = (length: number) =>
-  Array.from({ length }).map(randomCharacter);
+export const getRandomCharacterArray = (length: number) =>
+  Array.from({ length }).map(getRandomCharacter);

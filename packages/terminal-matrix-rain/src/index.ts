@@ -1,7 +1,7 @@
 import * as readline from "readline";
 import { Canvas } from "terminal-canvas";
 
-import { randomCharacterArray } from "./charset";
+import { getRandomCharacterArray } from "./charset";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.setRawMode) {
@@ -13,14 +13,14 @@ class Matrix {
   rows: number;
   columns: number;
   iteration: number;
-  chars: Char[];
+  charColumns: CharColumn[];
 
   constructor() {
-    this.canvas = new Canvas({ bg: "Black" });
+    this.canvas = new Canvas({ backgroundColor: "Black" });
     this.rows = process.stdout.rows!;
     this.columns = process.stdout.columns!;
     this.iteration = 0;
-    this.chars = [];
+    this.charColumns = [];
 
     this.canvas.hideCursor();
     this.canvas.print();
@@ -32,10 +32,10 @@ class Matrix {
     if (this.iteration % 5 === 0) {
       const column = Math.floor(Math.random() * this.columns);
 
-      if (this.canvas.getPixelData(0, column).v === " ") {
-        this.chars.push({
-          chars: randomCharacterArray(this.rows),
-          col: column,
+      if (this.canvas.getPixel(0, column).value === " ") {
+        this.charColumns.push({
+          chars: getRandomCharacterArray(this.rows),
+          column,
           decline: 6 + 4 * Math.random(),
           iteration: 0,
           speed: Math.floor(2 + 3 * Math.random())
@@ -51,49 +51,51 @@ class Matrix {
     this.removeFinishedColumns();
 
     // Update all remaining columns.
-    this.chars.forEach(charCol => {
+    this.charColumns.forEach(charColumn => {
       // index is the row of the furthest visible char
-      const index = Math.floor(charCol.iteration / charCol.speed);
+      const index = Math.floor(charColumn.iteration / charColumn.speed);
 
-      if (charCol.iteration % charCol.speed === 0 && index < this.rows) {
+      if (charColumn.iteration % charColumn.speed === 0 && index < this.rows) {
         // draw a new char
-        this.canvas.setPixelData(index, charCol.col, {
-          fg: { r: 255, g: 255, b: 255 },
-          v: charCol.chars[index]
+        this.canvas.setPixel(index, charColumn.column, {
+          foregroundColor: { r: 255, g: 255, b: 255 },
+          value: charColumn.chars[index]
         });
       }
 
-      if (charCol.iteration % 2 === 0) {
+      if (charColumn.iteration % 2 === 0) {
         for (let i = 0; i < Math.min(index, this.rows); i += 1) {
-          const pixelData = this.canvas.getPixelData(i, charCol.col)
-            .fg as RgbData;
-          const newData = {
+          const pixel = this.canvas.getPixel(i, charColumn.column)
+            .foregroundColor as RgbData;
+          const newForegroundColor = {
             b:
-              pixelData.r > 0
-                ? Math.max(0, Math.floor(pixelData.b - 2 * charCol.decline))
+              pixel.r > 0
+                ? Math.max(0, Math.floor(pixel.b - 2 * charColumn.decline))
                 : 0,
             g:
-              pixelData.r > 0
+              pixel.r > 0
                 ? 255
                 : Math.max(
                     0,
-                    Math.floor(pixelData.g - (2 * charCol.decline) / 2)
+                    Math.floor(pixel.g - (2 * charColumn.decline) / 2)
                   ),
             r:
-              pixelData.r > 0
-                ? Math.max(0, Math.floor(pixelData.r - 2 * charCol.decline))
+              pixel.r > 0
+                ? Math.max(0, Math.floor(pixel.r - 2 * charColumn.decline))
                 : 0
           };
 
-          if (newData.g === 0) {
-            this.canvas.setPixelData(i, charCol.col, { v: " " });
+          if (newForegroundColor.g === 0) {
+            this.canvas.setPixel(i, charColumn.column, { value: " " });
           } else {
-            this.canvas.setPixelData(i, charCol.col, { fg: newData });
+            this.canvas.setPixel(i, charColumn.column, {
+              foregroundColor: newForegroundColor
+            });
           }
         }
       }
 
-      charCol.iteration += 1;
+      charColumn.iteration += 1;
     });
 
     this.iteration += 1;
@@ -106,7 +108,7 @@ class Matrix {
   }
 
   removeFinishedColumns() {
-    this.chars = this.chars.filter(
+    this.charColumns = this.charColumns.filter(
       char =>
         char.iteration <=
         this.rows * char.speed + Math.floor(256 / 8) + Math.floor(256 / 4)
@@ -118,7 +120,7 @@ class Matrix {
   }
 }
 
-const m = new Matrix();
+const matrix = new Matrix();
 
 process.stdin.on("keypress", (_, key) => {
   if (key.ctrl && key.name === "c") {
@@ -127,7 +129,7 @@ process.stdin.on("keypress", (_, key) => {
 });
 
 const exitHandler = () => {
-  m.showCursor();
+  matrix.showCursor();
   console.clear(); // tslint:disable-line no-console
   process.exit();
 };

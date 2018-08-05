@@ -1,14 +1,7 @@
-import * as readline from "readline";
 import { Canvas } from "terminal-canvas";
 
 import { getRandomCharacterArray } from "./charset";
-
-readline.emitKeypressEvents(process.stdin);
-if (process.stdin.setRawMode) {
-  process.stdin.setRawMode(true);
-}
-
-class Matrix {
+export default class Matrix {
   canvas: Canvas;
   rows: number;
   columns: number;
@@ -119,21 +112,3 @@ class Matrix {
     this.canvas.showCursor();
   }
 }
-
-const matrix = new Matrix();
-
-process.stdin.on("keypress", (_, key) => {
-  if (key.ctrl && key.name === "c") {
-    process.emit("SIGINT");
-  }
-});
-
-const exitHandler = () => {
-  matrix.showCursor();
-  console.clear(); // tslint:disable-line no-console
-  process.exit();
-};
-
-process.on("exit", () => exitHandler);
-process.on("SIGINT", exitHandler);
-process.on("SIGUSR2", exitHandler);

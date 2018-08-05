@@ -4,6 +4,9 @@
   "description": "Matrix style terminal projection",
   "main": "dist/index.js",
   "module": "dist/index.js",
+  "bin": {
+    "matrix": "./bin/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "tslint -c tslint.json -p .",

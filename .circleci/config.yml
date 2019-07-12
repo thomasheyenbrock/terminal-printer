@@ -77,16 +77,6 @@ jobs:
       - run:
           name: Publishing
           command: yarn publish
-  renovate:
-    <<: *node10Environment
-    steps:
-      - checkout
-      - restore-cache: *restore_npm_cache
-      - run: *npm_auth_token
-      - run: *install
-      - run:
-          name: Renovate
-          command: for i in {1..100}; do yarn renovate -- --token ${PERSONAL_GITHUB_TOKEN} thomasheyenbrock/terminal-canvas; done;
 
 workflows:
   version: 2
@@ -109,13 +99,3 @@ workflows:
           filters:
             branches:
               only: master
-  terminal-canvas-renovate:
-    jobs:
-      - renovate
-    triggers:
-      - schedule:
-          cron: "0 0 * * 1"
-          filters:
-            branches:
-              only:
-                - master

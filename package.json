@@ -6,9 +6,7 @@
   "module": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "commitmsg": "commitlint -E GIT_PARAMS",
     "lint": "tslint -p . -c tslint.json",
-    "precommit": "lint-staged",
     "prettier": "prettier --write **/*.ts",
     "publish": "semantic-release",
     "start": "tsc -w",
@@ -67,6 +65,12 @@
       "git add",
       "yarn lint"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
   "prettier": {
     "trailingComma": "all"

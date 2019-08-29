@@ -15,25 +15,34 @@ describe("colors", () => {
       "color for %s",
       (type, expectedNumber) => {
         it("should return nothing when no color is passed", () => {
-          expect(getTerminalColor(type, null)).toBe("");
+          expect(
+            getTerminalColor(type as "foreground" | "background", null),
+          ).toBe("");
         });
         it("should return the correct color if the color is a string", () => {
-          expect(getTerminalColor(type, "PaleVioletRed")).toBe(
-            `\x1b[${expectedNumber}8;2;219;112;147m`,
-          );
+          expect(
+            getTerminalColor(
+              type as "foreground" | "background",
+              "PaleVioletRed",
+            ),
+          ).toBe(`\x1b[${expectedNumber}8;2;219;112;147m`);
         });
         it("should return the correct color if the color is an object", () => {
-          expect(getTerminalColor(type, { r: 1, g: 2, b: 3 })).toBe(
-            `\x1b[${expectedNumber}8;2;1;2;3m`,
-          );
+          expect(
+            getTerminalColor(type as "foreground" | "background", {
+              b: 3,
+              g: 2,
+              r: 1,
+            }),
+          ).toBe(`\x1b[${expectedNumber}8;2;1;2;3m`);
         });
       },
     );
   });
   describe("toHex", () => {
-    describe.each(Object.keys(colors))("color %s", (color: Color) => {
+    describe.each(Object.keys(colors))("color %s", color => {
       it("should find the color", () => {
-        expect(toHex(color)).toBe(colors[color]);
+        expect(toHex(color as Color)).toBe(colors[color as Color]);
       });
     });
     it("should throw an error for an unknown color", () => {

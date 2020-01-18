@@ -171,7 +171,7 @@ type Update = {
   pixel: Partial<Pixel>;
 };
 
-interface CanvasInterface {
+interface PrinterInterface {
   height: number;
   width: number;
 
@@ -220,11 +220,11 @@ interface CanvasInterface {
   ): void;
 }
 
-declare module "terminal-canvas" {
-  export class Canvas implements CanvasInterface {
+declare module "terminal-printer" {
+  export class Printer implements PrinterInterface {
     public height: number;
     public width: number;
-    private canvas: Pixel[][];
+    private printer: Pixel[][];
     private updateBuffer: Update[];
 
     constructor(config?: {

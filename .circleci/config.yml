@@ -1,13 +1,13 @@
 # Aliases for reuse
 aliases:
-  - &working_directory ~/terminal-canvas
+  - &working_directory ~/terminal-printer
 
   - &restore_npm_cache
     keys:
-      - v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
+      - v1-terminal-printer-npm-cache-{{ checksum "yarn.lock" }}
 
   - &save_npm_cache
-    key: v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
+    key: v1-terminal-printer-npm-cache-{{ checksum "yarn.lock" }}
     paths:
       - node_modules
 
@@ -80,7 +80,7 @@ jobs:
 
 workflows:
   version: 2
-  terminal-canvas-workflow:
+  terminal-printer-workflow:
     jobs:
       - install
       - lint:

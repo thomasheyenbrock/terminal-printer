@@ -1,7 +1,7 @@
 {
-  "name": "terminal-canvas",
+  "name": "terminal-printer",
   "version": "1.0.0",
-  "description": "Print a canvas and text content on a terminal screen.",
+  "description": "Print anything on a terminal screen.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {

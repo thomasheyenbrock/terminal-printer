@@ -73,6 +73,9 @@ jobs:
   publish:
     <<: *node12Environment
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4e:f6:11:50:f1:a9:59:25:40:63:ef:bd:5d:cd:69:76"
       - checkout
       - restore-cache: *restore_npm_cache
       - attach_workspace:
@@ -104,4 +107,4 @@ workflows:
             - build
           filters:
             branches:
-              only: master
+              only: develop

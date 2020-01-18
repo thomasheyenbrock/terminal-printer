@@ -1,9 +1,9 @@
 import { getTerminalColor } from "./colors";
 
-export class Canvas implements CanvasInterface {
+export class Printer implements PrinterInterface {
   public height: number;
   public width: number;
-  private canvas: Pixel[][];
+  private printer: Pixel[][];
   private updateBuffer: Update[];
 
   constructor(config?: {
@@ -36,7 +36,7 @@ export class Canvas implements CanvasInterface {
     this.height = (config && config.height) || process.stdout.rows!;
     this.width = (config && config.width) || process.stdout.columns!;
 
-    this.canvas = Array.from({ length: this.height }).map(_ =>
+    this.printer = Array.from({ length: this.height }).map(_ =>
       Array.from({ length: this.width }).map(__ => ({
         backgroundColor: (config && config.backgroundColor) || null,
         foregroundColor: (config && config.foregroundColor) || null,
@@ -65,7 +65,7 @@ export class Canvas implements CanvasInterface {
   }
 
   public getPixel(row: number, column: number): Pixel {
-    return this.canvas[row][column];
+    return this.printer[row][column];
   }
 
   public hideCursor(): void {
@@ -73,7 +73,7 @@ export class Canvas implements CanvasInterface {
   }
 
   public print(): void {
-    const print = this.canvas
+    const print = this.printer
       .map(row =>
         row
           .map(
@@ -101,8 +101,8 @@ export class Canvas implements CanvasInterface {
       );
     }
 
-    this.canvas[row][column] = {
-      ...this.canvas[row][column],
+    this.printer[row][column] = {
+      ...this.printer[row][column],
       ...pixel,
     };
 
@@ -115,7 +115,7 @@ export class Canvas implements CanvasInterface {
         pixel: {
           backgroundColor: pixel.backgroundColor || null,
           foregroundColor: pixel.foregroundColor || null,
-          value: pixel.value || this.canvas[row][column].value,
+          value: pixel.value || this.printer[row][column].value,
         },
         row,
       });

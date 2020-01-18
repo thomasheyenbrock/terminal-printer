@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "target": "es5",
@@ -13,15 +12,7 @@
     "lib": ["es5", "es6", "es7", "es2017", "esnext.asynciterable"],
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["node_modules/@types"],
-    "baseUrl": "app",
-    "types": ["jest", "node"],
-    "paths": {
-      "*": [
-        "*"
-      ]
-    }
+    "types": ["jest", "node"]
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -1,0 +1,24 @@
+{
+  "name": "terminal-snake",
+  "version": "0.2.1",
+  "description": "Play snake in a terminal window",
+  "main": "dist/index.js",
+  "bin": "bin/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "start": "node .",
+    "build": "tsc"
+  },
+  "author": "Thomas Heyenbrock",
+  "license": "ISC",
+  "dependencies": {
+    "terminal-printer": "^0.2.1"
+  },
+  "gitHead": "cb5e4a98f0f9510c39523438dfdc439ca867d1c5"
+}

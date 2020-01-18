@@ -1,13 +1,13 @@
 # Aliases for reuse
 aliases:
-  - &working_directory ~/terminal-canvas
+  - &working_directory ~/terminal-printer
 
   - &restore_npm_cache
     keys:
-      - v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
+      - v1-terminal-printer-npm-cache-{{ checksum "yarn.lock" }}
 
   - &save_npm_cache
-    key: v1-terminal-canvas-npm-cache-{{ checksum "yarn.lock" }}
+    key: v1-terminal-printer-npm-cache-{{ checksum "yarn.lock" }}
     paths:
       - node_modules
 
@@ -67,7 +67,9 @@ jobs:
       - persist_to_workspace:
           root: *working_directory
           paths:
-            - dist/*
+            - packages/terminal-matrix-rain/dist
+            - packages/terminal-printer/dist
+            - packages/terminal-snake/dist
   publish:
     <<: *node12Environment
     steps:
@@ -76,11 +78,11 @@ jobs:
           at: *working_directory
       - run:
           name: Publishing
-          command: yarn publish
+          command: yarn lerna publish --conventional-commits --yes
 
 workflows:
   version: 2
-  terminal-canvas-workflow:
+  terminal-printer-workflow:
     jobs:
       - install
       - lint:

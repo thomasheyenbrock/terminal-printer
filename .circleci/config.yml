@@ -78,6 +78,9 @@ jobs:
       - attach_workspace:
           at: *working_directory
       - run:
+          name: Git config
+          command: git config --global user.email "thomas.heyenbrock@gmail.com" && git config --global user.name "Thomas Heyenbrock"
+      - run:
           name: Publishing
           command: yarn lerna publish --conventional-commits --yes
 

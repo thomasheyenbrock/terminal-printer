@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const readline = require("readline");
-const Matrix = require("../dist/index.js");
+const { default: Matrix } = require("../dist/index.js");
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.setRawMode) {

@@ -86,6 +86,9 @@ jobs:
       - run:
           name: Publishing
           command: yarn lerna publish --conventional-commits --yes
+      - run:
+          name: Merge master in develop
+          command: git checkout develop && git merge master && git push
 
 workflows:
   version: 2

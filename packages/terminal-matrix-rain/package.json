@@ -3,9 +3,7 @@
   "version": "0.2.4",
   "description": "Matrix style terminal projection",
   "main": "dist/index.js",
-  "bin": {
-    "matrix": "./bin/index.js"
-  },
+  "bin": "bin/index.js",
   "directories": {
     "lib": "lib"
   },

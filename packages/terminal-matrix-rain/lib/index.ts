@@ -1,7 +1,8 @@
+import { emitKeypressEvents } from "readline";
 import { Printer } from "terminal-printer";
 
 import { getRandomCharacterArray } from "./charset";
-export default class Matrix {
+export class Matrix {
   printer: Printer;
   rows: number;
   columns: number;
@@ -110,3 +111,28 @@ export default class Matrix {
     this.printer.showCursor();
   }
 }
+
+export const run = () => {
+  emitKeypressEvents(process.stdin);
+  if (process.stdin.setRawMode) {
+    process.stdin.setRawMode(true);
+  }
+
+  const matrix = new Matrix();
+
+  process.stdin.on("keypress", (_, key) => {
+    if (key.ctrl && key.name === "c") {
+      process.emit("SIGINT", "SIGINT");
+    }
+  });
+
+  const exitHandler = () => {
+    matrix.showCursor();
+    console.clear(); // tslint:disable-line no-console
+    process.exit();
+  };
+
+  process.on("exit", () => exitHandler);
+  process.on("SIGINT", exitHandler);
+  process.on("SIGUSR2", exitHandler);
+};

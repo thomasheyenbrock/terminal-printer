@@ -1,6 +1,6 @@
 {
   "name": "terminal-matrix-rain",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Matrix style terminal projection",
   "main": "dist/index.js",
   "bin": {
@@ -21,6 +21,6 @@
   "author": "Thomas Heyenbrock",
   "license": "ISC",
   "dependencies": {
-    "terminal-printer": "^0.1.0"
+    "terminal-printer": "^0.2.0"
   }
 }

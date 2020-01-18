@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.0...v0.2.1) (2020-01-18)
+
+
+### Bug Fixes
+
+* remove publish config ([eeb788d](https://github.com/thomasheyenbrock/terminal-printer/commit/eeb788d5401d326d2d99181e4bd97778639faf43))
+
+
+
+
+
 # 0.2.0 (2020-01-18)
 
 

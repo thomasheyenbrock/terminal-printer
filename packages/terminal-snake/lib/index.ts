@@ -10,7 +10,7 @@ if (process.stdin.setRawMode) {
 const rows = process.stdout.rows || 0;
 const columns = process.stdout.columns || 0;
 
-class Snake {
+export class Snake {
   printer: Printer;
   rows: number;
   columns: number;
@@ -23,12 +23,16 @@ class Snake {
   speed: number;
 
   constructor(
-    printer: Printer,
     printerRows: number,
     printerColumns: number,
     initialLength: number,
   ) {
-    this.printer = printer;
+    this.printer = new Printer({
+      backgroundColor: "White",
+      foregroundColor: "Black",
+      height: rows,
+      width: columns,
+    });
     this.rows = printerRows;
     this.columns = printerColumns;
     this.initialPosition = {
@@ -196,36 +200,32 @@ class Snake {
   }
 }
 
-const c = new Printer({
-  backgroundColor: "White",
-  foregroundColor: "Black",
-  height: rows,
-  width: columns,
-});
-const s = new Snake(c, rows, columns, 6);
+export const run = () => {
+  const snake = new Snake(rows, columns, 6);
 
-const validKeys = ["left", "right", "up", "down"];
+  const validKeys = ["left", "right", "up", "down"];
 
-process.stdin.on("keypress", (_, key) => {
-  const state = s.getState();
+  process.stdin.on("keypress", (_, key) => {
+    const state = snake.getState();
 
-  if (key.ctrl && key.name === "c") {
-    process.emit("SIGINT", "SIGINT");
-  } else if (state === "game" && validKeys.indexOf(key.name) >= 0) {
-    s.setDirection(key.name);
-  } else if (state === "start" && key.name === "q") {
-    process.emit("SIGINT", "SIGINT");
-  } else if (state === "start" && key.name === "s") {
-    s.startGame();
-  }
-});
+    if (key.ctrl && key.name === "c") {
+      process.emit("SIGINT", "SIGINT");
+    } else if (state === "game" && validKeys.indexOf(key.name) >= 0) {
+      snake.setDirection(key.name);
+    } else if (state === "start" && key.name === "q") {
+      process.emit("SIGINT", "SIGINT");
+    } else if (state === "start" && key.name === "s") {
+      snake.startGame();
+    }
+  });
 
-const exitHandler = () => {
-  c.showCursor();
-  console.clear(); // tslint:disable-line no-console
-  process.exit();
+  const exitHandler = () => {
+    snake.printer.showCursor();
+    console.clear(); // tslint:disable-line no-console
+    process.exit();
+  };
+
+  process.on("exit", () => exitHandler);
+  process.on("SIGINT", exitHandler);
+  process.on("SIGUSR2", exitHandler);
 };
-
-process.on("exit", () => exitHandler);
-process.on("SIGINT", exitHandler);
-process.on("SIGUSR2", exitHandler);

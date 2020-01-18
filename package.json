@@ -12,7 +12,6 @@
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
     "prettier": "prettier --write **/*.ts",
-    "publish": "lerna publish --conventional-commits --yes",
     "test": "lerna run test --stream"
   },
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",

@@ -74,6 +74,7 @@ jobs:
     <<: *node12Environment
     steps:
       - checkout
+      - restore-cache: *restore_npm_cache
       - attach_workspace:
           at: *working_directory
       - run:

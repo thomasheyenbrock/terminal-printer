@@ -1,0 +1,39 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-eslint-rules",
+    "tslint-config-airbnb",
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "arrow-return-shorthand": [true, "multiline"],
+    "await-promise": true,
+    "handle-callback-err": true,
+    "import-name": false,
+    "interface-name": false,
+    "interface-over-type-literal": false,
+    "max-classes-per-file": false,
+    "member-access": false,
+    "no-constant-condition": true,
+    "no-empty-interface": true,
+    "no-implicit-dependencies": false,
+    "no-object-literal-type-assertion": false,
+    "no-submodule-imports": false,
+    "no-switch-case-fall-through": true,
+    "no-unexpected-multiline": true,
+    "no-unnecessary-callback-wrapper": true,
+    "no-unused-variable": true,
+    "object-shorthand-properties-first": false,
+    "only-arrow-functions": true,
+    "prefer-for-of": true,
+    "prefer-template": true,
+    "restrict-plus-operands": true,
+    "switch-default": true,
+    "ter-computed-property-spacing": false,
+    "ter-no-proto": true,
+    "ter-no-self-compare": true,
+    "typedef": true,
+    "variable-name": [true, "check-format", "allow-pascal-case"]
+  }
+}

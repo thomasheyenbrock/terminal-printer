@@ -26,14 +26,14 @@ class Snake {
     printer: Printer,
     printerRows: number,
     printerColumns: number,
-    initialLength: number
+    initialLength: number,
   ) {
     this.printer = printer;
     this.rows = printerRows;
     this.columns = printerColumns;
     this.initialPosition = {
       col: Math.floor(this.columns / 2),
-      row: Math.floor(this.rows / 2)
+      row: Math.floor(this.rows / 2),
     };
     this.initialLength = initialLength;
     this.direction = "right";
@@ -44,14 +44,14 @@ class Snake {
 
     const startScreen = fs.readFileSync(
       `${__dirname}/../ascii/start.txt`,
-      "utf8"
+      "utf8",
     );
 
     this.printer.hideCursor();
     this.printer.print();
     this.printer.writeCenteredText(startScreen, {
       backgroundColor: "Black",
-      foregroundColor: "White"
+      foregroundColor: "White",
     });
     this.printer.update();
   }
@@ -61,11 +61,11 @@ class Snake {
 
     const startScreen = fs.readFileSync(
       `${__dirname}/../ascii/gameOver.txt`,
-      "utf8"
+      "utf8",
     );
     this.printer.writeCenteredText(startScreen, {
       backgroundColor: "Black",
-      foregroundColor: "White"
+      foregroundColor: "White",
     });
     this.printer.update();
 
@@ -101,7 +101,7 @@ class Snake {
       newBlock.col < 0 ||
       newBlock.col >= columns ||
       this.blocks.findIndex(
-        block => block.row === newBlock.row && block.col === newBlock.col
+        block => block.row === newBlock.row && block.col === newBlock.col,
       ) >= 0
     ) {
       this.endGame();
@@ -121,12 +121,12 @@ class Snake {
     this.printer.setPixel(lastBlock.row, lastBlock.col, {
       backgroundColor: null,
       foregroundColor: null,
-      value: " "
+      value: " ",
     });
     this.printer.setPixel(newBlock.row, newBlock.col, {
       backgroundColor: null,
       foregroundColor: null,
-      value: "x"
+      value: "x",
     });
     this.printer.update();
     setTimeout(this.move.bind(this), this.speed);
@@ -146,12 +146,12 @@ class Snake {
 
     this.food = {
       col,
-      row
+      row,
     };
     this.printer.setPixel(row, col, {
       backgroundColor: null,
       foregroundColor: null,
-      value: "o"
+      value: "o",
     });
     this.printer.update();
   }
@@ -177,7 +177,7 @@ class Snake {
     for (let i = 0; i < this.initialLength; i += 1) {
       this.blocks.push({
         col: this.initialPosition.col - (this.initialLength - i - 1),
-        row: this.initialPosition.row
+        row: this.initialPosition.row,
       });
     }
 
@@ -185,7 +185,7 @@ class Snake {
       this.printer.setPixel(block.row, block.col, {
         backgroundColor: null,
         foregroundColor: null,
-        value: "x"
+        value: "x",
       });
     });
     this.printer.update();
@@ -200,7 +200,7 @@ const c = new Printer({
   backgroundColor: "White",
   foregroundColor: "Black",
   height: rows,
-  width: columns
+  width: columns,
 });
 const s = new Snake(c, rows, columns, 6);
 
@@ -210,11 +210,11 @@ process.stdin.on("keypress", (_, key) => {
   const state = s.getState();
 
   if (key.ctrl && key.name === "c") {
-    process.emit("SIGINT");
+    process.emit("SIGINT", "SIGINT");
   } else if (state === "game" && validKeys.indexOf(key.name) >= 0) {
     s.setDirection(key.name);
   } else if (state === "start" && key.name === "q") {
-    process.emit("SIGINT");
+    process.emit("SIGINT", "SIGINT");
   } else if (state === "start" && key.name === "s") {
     s.startGame();
   }

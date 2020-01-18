@@ -31,7 +31,7 @@ export default class Matrix {
           column,
           decline: 6 + 4 * Math.random(),
           iteration: 0,
-          speed: Math.floor(2 + 3 * Math.random())
+          speed: Math.floor(2 + 3 * Math.random()),
         });
       }
     }
@@ -50,7 +50,7 @@ export default class Matrix {
         // draw a new char
         this.printer.setPixel(index, charColumn.column, {
           foregroundColor: { r: 255, g: 255, b: 255 },
-          value: charColumn.chars[index]
+          value: charColumn.chars[index],
         });
       }
 
@@ -68,19 +68,19 @@ export default class Matrix {
                 ? 255
                 : Math.max(
                     0,
-                    Math.floor(pixel.g - (2 * charColumn.decline) / 2)
+                    Math.floor(pixel.g - (2 * charColumn.decline) / 2),
                   ),
             r:
               pixel.r > 0
                 ? Math.max(0, Math.floor(pixel.r - 2 * charColumn.decline))
-                : 0
+                : 0,
           };
 
           if (newForegroundColor.g === 0) {
             this.printer.setPixel(i, charColumn.column, { value: " " });
           } else {
             this.printer.setPixel(i, charColumn.column, {
-              foregroundColor: newForegroundColor
+              foregroundColor: newForegroundColor,
             });
           }
         }
@@ -102,7 +102,7 @@ export default class Matrix {
     this.charColumns = this.charColumns.filter(
       char =>
         char.iteration <=
-        this.rows * char.speed + Math.floor(256 / 8) + Math.floor(256 / 4)
+        this.rows * char.speed + Math.floor(256 / 8) + Math.floor(256 / 4),
     );
   }
 

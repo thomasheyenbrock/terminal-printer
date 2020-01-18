@@ -93,7 +93,7 @@ const charset = [
   "\u2C10",
   "\u2C2C",
   "\u2CC4",
-  "\u2CDE"
+  "\u2CDE",
 ];
 
 export const getRandomCharacter = () =>

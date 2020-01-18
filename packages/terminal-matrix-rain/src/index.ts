@@ -22,7 +22,7 @@ export default class Matrix {
   }
 
   addNewColumn() {
-    if (this.iteration % 5 === 0) {
+    if (this.iteration % 2 === 0) {
       const column = Math.floor(Math.random() * this.columns);
 
       if (this.canvas.getPixel(0, column).value === " ") {

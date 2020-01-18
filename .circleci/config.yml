@@ -36,7 +36,6 @@ jobs:
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
-      - run: *npm_auth_token
       - run: *install
       - run: *reset_lockfile
       - save-cache: *save_npm_cache
@@ -73,10 +72,14 @@ jobs:
   publish:
     <<: *node12Environment
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4e:f6:11:50:f1:a9:59:25:40:63:ef:bd:5d:cd:69:76"
       - checkout
       - restore-cache: *restore_npm_cache
       - attach_workspace:
           at: *working_directory
+      - run: *npm_auth_token
       - run:
           name: Git config
           command: git config --global user.email "thomas.heyenbrock@gmail.com" && git config --global user.name "Thomas Heyenbrock"

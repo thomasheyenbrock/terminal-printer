@@ -1,0 +1,38 @@
+{
+  "name": "terminal-printer",
+  "version": "0.0.0",
+  "description": "Print anything on a terminal screen.",
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -p . -c ../../tslint.json",
+    "start": "tsc -w",
+    "test": "jest --coverage"
+  },
+  "bugs": {
+    "url": "https://github.com/thomasheyenbrock/terminal-printer/issues"
+  }
+}

@@ -1,17 +1,17 @@
 {
   "name": "terminal-printer",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Print anything on a terminal screen.",
   "main": "dist/index.js",
   "module": "dist/index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "tsc",
-    "lint": "tslint -p . -c tslint.json",
+    "lint": "lerna run lint --stream",
     "prettier": "prettier --write **/*.ts",
-    "publish": "semantic-release",
-    "start": "tsc -w",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "publish": "lerna publish --conventional-commits --yes",
+    "test": "lerna run test --stream"
   },
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "license": "ISC",
@@ -22,9 +22,9 @@
     "@types/node": "^13.1.7",
     "husky": "^4.0.10",
     "jest": "^24.9.0",
+    "lerna": "^3.20.2",
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
-    "semantic-release": "^16.0.2",
     "ts-jest": "^24.3.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2",
@@ -33,37 +33,11 @@
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.5"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.ts"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 98,
-        "branches": 91,
-        "functions": 98,
-        "lines": 98
-      }
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.json"
-      }
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "transform": {
-      "\\.ts$": "ts-jest"
-    },
-    "testRegex": "\\.test\\.ts$"
-  },
   "lint-staged": {
     "**/*.ts": [
       "prettier --write",
       "git add",
-      "yarn lint"
+      "tslint -c tslint.json -p ."
     ]
   },
   "husky": {

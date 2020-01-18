@@ -1,4 +1,4 @@
-import { Printer } from "../index";
+import { Printer } from "../lib/index";
 
 const processRows = 11;
 const processColumns = 21;

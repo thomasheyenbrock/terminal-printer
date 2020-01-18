@@ -1,6 +1,6 @@
 {
   "name": "terminal-printer",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Print anything on a terminal screen.",
   "keywords": [
     "terminal",

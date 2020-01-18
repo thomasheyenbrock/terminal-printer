@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.1...v0.2.4) (2020-01-18)
+
+
+### Bug Fixes
+
+* add auth token and ssh deploy key ([e4fe34d](https://github.com/thomasheyenbrock/terminal-printer/commit/e4fe34ddef125702dd3ec89c93da7afbb6ec1f64))
+* include type definitions ([c69c4e8](https://github.com/thomasheyenbrock/terminal-printer/commit/c69c4e846685af2dc3e8a9b2aa4b3801e9299689))
+* restore yarn cache ([7fe3155](https://github.com/thomasheyenbrock/terminal-printer/commit/7fe3155ee6abf9a854b9e3079032653204eb9eb9))
+* set git config ([30c2d50](https://github.com/thomasheyenbrock/terminal-printer/commit/30c2d5074b420908e094ff1d9cc254095e51772f))
+
+
+
+
+
 ## [0.2.3](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.1...v0.2.3) (2020-01-18)
 
 

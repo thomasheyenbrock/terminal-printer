@@ -38,8 +38,6 @@ export default class Matrix {
   }
 
   doIteration() {
-    // const timer = new Date();
-
     this.addNewColumn();
     this.removeFinishedColumns();
 

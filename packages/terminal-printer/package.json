@@ -11,13 +11,13 @@
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/lib/index.js",
   "directories": {
     "lib": "lib",
     "test": "tests"
   },
   "files": [
-    "lib"
+    "dist/lib"
   ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"

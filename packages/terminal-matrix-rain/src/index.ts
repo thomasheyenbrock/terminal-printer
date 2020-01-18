@@ -1,22 +1,22 @@
-import { Canvas } from "terminal-canvas";
+import { Printer } from "terminal-printer";
 
 import { getRandomCharacterArray } from "./charset";
 export default class Matrix {
-  canvas: Canvas;
+  printer: Printer;
   rows: number;
   columns: number;
   iteration: number;
   charColumns: CharColumn[];
 
   constructor() {
-    this.canvas = new Canvas({ backgroundColor: "Black" });
+    this.printer = new Printer({ backgroundColor: "Black" });
     this.rows = process.stdout.rows!;
     this.columns = process.stdout.columns!;
     this.iteration = 0;
     this.charColumns = [];
 
-    this.canvas.hideCursor();
-    this.canvas.print();
+    this.printer.hideCursor();
+    this.printer.print();
 
     this.doIteration();
   }
@@ -25,7 +25,7 @@ export default class Matrix {
     if (this.iteration % 2 === 0) {
       const column = Math.floor(Math.random() * this.columns);
 
-      if (this.canvas.getPixel(0, column).value === " ") {
+      if (this.printer.getPixel(0, column).value === " ") {
         this.charColumns.push({
           chars: getRandomCharacterArray(this.rows),
           column,
@@ -48,7 +48,7 @@ export default class Matrix {
 
       if (charColumn.iteration % charColumn.speed === 0 && index < this.rows) {
         // draw a new char
-        this.canvas.setPixel(index, charColumn.column, {
+        this.printer.setPixel(index, charColumn.column, {
           foregroundColor: { r: 255, g: 255, b: 255 },
           value: charColumn.chars[index]
         });
@@ -56,7 +56,7 @@ export default class Matrix {
 
       if (charColumn.iteration % 2 === 0) {
         for (let i = 0; i < Math.min(index, this.rows); i += 1) {
-          const pixel = this.canvas.getPixel(i, charColumn.column)
+          const pixel = this.printer.getPixel(i, charColumn.column)
             .foregroundColor as RgbData;
           const newForegroundColor = {
             b:
@@ -77,9 +77,9 @@ export default class Matrix {
           };
 
           if (newForegroundColor.g === 0) {
-            this.canvas.setPixel(i, charColumn.column, { value: " " });
+            this.printer.setPixel(i, charColumn.column, { value: " " });
           } else {
-            this.canvas.setPixel(i, charColumn.column, {
+            this.printer.setPixel(i, charColumn.column, {
               foregroundColor: newForegroundColor
             });
           }
@@ -95,7 +95,7 @@ export default class Matrix {
       this.doIteration();
     }, 1000 / 24);
 
-    this.canvas.update();
+    this.printer.update();
   }
 
   removeFinishedColumns() {
@@ -107,6 +107,6 @@ export default class Matrix {
   }
 
   showCursor() {
-    this.canvas.showCursor();
+    this.printer.showCursor();
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "terminal-matrix-rain",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Matrix style terminal projection",
   "main": "dist/index.js",
   "bin": "bin/index.js",

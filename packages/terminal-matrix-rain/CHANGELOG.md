@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.4...v0.2.5) (2020-01-18)
+
+
+### Bug Fixes
+
+* bin files ([24d7861](https://github.com/thomasheyenbrock/terminal-printer/commit/24d786150f7b70de24f8fda370f65c451fa78080))
+* broken import ([bc67d20](https://github.com/thomasheyenbrock/terminal-printer/commit/bc67d20e5e43a4190e8feec2a343d364d900a224))
+
+
+
+
+
 ## [0.2.4](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.1...v0.2.4) (2020-01-18)
 
 **Note:** Version bump only for package terminal-matrix-rain

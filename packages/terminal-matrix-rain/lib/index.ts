@@ -1,4 +1,4 @@
-import readline from "readline";
+import { emitKeypressEvents } from "readline";
 import { Printer } from "terminal-printer";
 
 import { getRandomCharacterArray } from "./charset";
@@ -113,7 +113,7 @@ export class Matrix {
 }
 
 export const run = () => {
-  readline.emitKeypressEvents(process.stdin);
+  emitKeypressEvents(process.stdin);
   if (process.stdin.setRawMode) {
     process.stdin.setRawMode(true);
   }

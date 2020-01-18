@@ -36,7 +36,6 @@ jobs:
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
-      - run: *npm_auth_token
       - run: *install
       - run: *reset_lockfile
       - save-cache: *save_npm_cache
@@ -80,6 +79,7 @@ jobs:
       - restore-cache: *restore_npm_cache
       - attach_workspace:
           at: *working_directory
+      - run: *npm_auth_token
       - run:
           name: Git config
           command: git config --global user.email "thomas.heyenbrock@gmail.com" && git config --global user.name "Thomas Heyenbrock"

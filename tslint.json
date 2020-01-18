@@ -23,7 +23,6 @@
     "no-switch-case-fall-through": true,
     "no-unexpected-multiline": true,
     "no-unnecessary-callback-wrapper": true,
-    "no-unused-variable": true,
     "object-shorthand-properties-first": false,
     "only-arrow-functions": true,
     "prefer-for-of": true,

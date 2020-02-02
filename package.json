@@ -2,31 +2,41 @@
   "name": "terminal-printer",
   "version": "0.0.0",
   "description": "Print anything on a terminal screen.",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
+  "main": "dist/index.js",
   "scripts": {
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
-    "prettier": "prettier --write **/*.ts",
+    "prettify": "prettier --write **/*.{js,ts,json}",
     "test": "lerna run test --stream"
   },
-  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
-  "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@types/jest": "^24.9.0",
+    "@types/jest": "^25.1.0",
     "@types/node": "^13.1.7",
     "husky": "^4.0.10",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "lerna": "^3.20.2",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.1",
     "prettier": "^1.19.1",
-    "ts-jest": "^24.3.0",
+    "ts-jest": "^25.0.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2",
     "tslint-config-prettier": "^1.18.0",
@@ -34,18 +44,17 @@
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.5"
   },
-  "lint-staged": {
-    "**/*.ts": [
-      "prettier --write",
-      "git add",
-      "tslint -c tslint.json -p ."
-    ]
-  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "prettier --write",
+      "tslint -c tslint.json -p ."
+    ]
   },
   "prettier": {
     "trailingComma": "all"

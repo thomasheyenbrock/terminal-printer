@@ -1,7 +1,7 @@
 {
-  "name": "terminal-snake",
+  "name": "game-of-life",
   "version": "0.2.5",
-  "description": "Play snake in a terminal window",
+  "description": "A simulation of the 'Game of Life' by John Conway",
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "license": "ISC",
   "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
@@ -21,7 +21,6 @@
     "lib": "lib"
   },
   "files": [
-    "ascii",
     "bin",
     "dist"
   ],
@@ -31,7 +30,10 @@
     "start": "node ./bin/index.js"
   },
   "dependencies": {
-    "terminal-printer": "^0.2.4"
+    "minimist": "^1.2.0"
   },
-  "gitHead": "cb5e4a98f0f9510c39523438dfdc439ca867d1c5"
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "terminal-printer": "^0.2.4"
+  }
 }

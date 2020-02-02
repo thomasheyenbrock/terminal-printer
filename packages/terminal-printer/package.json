@@ -2,15 +2,19 @@
   "name": "terminal-printer",
   "version": "0.2.4",
   "description": "Print anything on a terminal screen.",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
   "keywords": [
     "terminal",
     "print",
     "color",
     "nodejs"
   ],
-  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
-  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
-  "license": "MIT",
   "main": "dist/lib/index.js",
   "directories": {
     "lib": "lib",
@@ -20,10 +24,6 @@
     "index.d.ts",
     "dist/lib"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
-  },
   "scripts": {
     "build": "tsc",
     "lint": "tslint -p . -c ../../tslint.json",

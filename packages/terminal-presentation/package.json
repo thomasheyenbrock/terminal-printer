@@ -1,7 +1,7 @@
 {
-  "name": "terminal-snake",
+  "name": "terminal-presentation",
   "version": "0.2.5",
-  "description": "Play snake in a terminal window",
+  "description": "Build presentation from txt-files in the terminal.",
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "license": "ISC",
   "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
@@ -16,12 +16,10 @@
     "nodejs"
   ],
   "main": "dist/index.js",
-  "bin": "bin/index.js",
   "directories": {
     "lib": "lib"
   },
   "files": [
-    "ascii",
     "bin",
     "dist"
   ],

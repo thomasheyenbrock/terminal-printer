@@ -2,6 +2,19 @@
   "name": "terminal-snake",
   "version": "0.2.5",
   "description": "Play snake in a terminal window",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
   "main": "dist/index.js",
   "bin": "bin/index.js",
   "directories": {
@@ -16,8 +29,6 @@
     "start": "node .",
     "build": "tsc"
   },
-  "author": "Thomas Heyenbrock",
-  "license": "ISC",
   "dependencies": {
     "terminal-printer": "^0.2.4"
   },

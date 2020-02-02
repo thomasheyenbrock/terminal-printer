@@ -2,20 +2,30 @@
   "name": "terminal-printer",
   "version": "0.0.0",
   "description": "Print anything on a terminal screen.",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
+  "main": "dist/index.js",
   "scripts": {
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
     "prettier": "prettier --write **/*.ts",
     "test": "lerna run test --stream"
   },
-  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
-  "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -34,17 +44,17 @@
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.5"
   },
-  "lint-staged": {
-    "**/*.ts": [
-      "prettier --write",
-      "tslint -c tslint.json -p ."
-    ]
-  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "prettier --write",
+      "tslint -c tslint.json -p ."
+    ]
   },
   "prettier": {
     "trailingComma": "all"

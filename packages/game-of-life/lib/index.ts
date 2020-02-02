@@ -9,7 +9,7 @@ if (process.stdin.setRawMode) {
 
 const args = minimist(process.argv.slice(2));
 
-class GameOfLife {
+export class GameOfLife {
   printer: Printer;
   rows: number;
   columns: number;
@@ -112,13 +112,15 @@ class GameOfLife {
   }
 }
 
-const game = new GameOfLife(" ", "\u2022", args.rate || 0.5);
+export const run = () => {
+  const game = new GameOfLife(" ", "\u2022", args.rate || 0.5);
 
-game.start();
+  game.start();
 
-process.stdin.on("keypress", (_, key) => {
-  if (key.ctrl && key.name === "c") {
-    game.showCursor();
-    process.exit(0);
-  }
-});
+  process.stdin.on("keypress", (_, key) => {
+    if (key.ctrl && key.name === "c") {
+      game.showCursor();
+      process.exit(0);
+    }
+  });
+};

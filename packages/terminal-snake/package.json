@@ -26,8 +26,9 @@
     "dist"
   ],
   "scripts": {
-    "start": "node .",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "tslint -p . -c ../../tslint.json",
+    "start": "node ./bin/index.js"
   },
   "dependencies": {
     "terminal-printer": "^0.2.4"

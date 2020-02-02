@@ -25,8 +25,9 @@
     "dist"
   ],
   "scripts": {
-    "start": "node .",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "tslint -p . -c ../../tslint.json",
+    "start": "node ./bin/index.js"
   },
   "dependencies": {
     "minimist": "^1.2.0"

@@ -1,6 +1,6 @@
 {
   "name": "game-of-life",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "A simulation of the 'Game of Life' by John Conway",
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "license": "ISC",
@@ -34,6 +34,6 @@
   },
   "devDependencies": {
     "@types/minimist": "^1.2.0",
-    "terminal-printer": "^0.2.4"
+    "terminal-printer": "^0.3.0"
   }
 }

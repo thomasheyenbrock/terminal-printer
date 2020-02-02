@@ -1,6 +1,6 @@
 {
   "name": "terminal-presentation",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Build presentation from txt-files in the terminal.",
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
   "license": "ISC",
@@ -29,7 +29,7 @@
     "start": "node ./bin/index.js"
   },
   "dependencies": {
-    "terminal-printer": "^0.2.4"
+    "terminal-printer": "^0.3.0"
   },
   "gitHead": "cb5e4a98f0f9510c39523438dfdc439ca867d1c5"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "game-of-life",
+  "name": "terminal-game-of-life",
   "version": "0.3.0",
   "description": "A simulation of the 'Game of Life' by John Conway",
   "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",

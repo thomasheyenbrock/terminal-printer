@@ -1,0 +1,35 @@
+{
+  "name": "terminal-presentation",
+  "version": "0.2.5",
+  "description": "Build presentation from txt-files in the terminal.",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -p . -c ../../tslint.json",
+    "start": "node ./bin/index.js"
+  },
+  "dependencies": {
+    "terminal-printer": "^0.2.4"
+  },
+  "gitHead": "cb5e4a98f0f9510c39523438dfdc439ca867d1c5"
+}

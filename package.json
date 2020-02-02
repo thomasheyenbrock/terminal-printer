@@ -23,7 +23,7 @@
   "scripts": {
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
-    "prettier": "prettier --write **/*.ts",
+    "prettify": "prettier --write **/*.{js,ts,json}",
     "test": "lerna run test --stream"
   },
   "devDependencies": {

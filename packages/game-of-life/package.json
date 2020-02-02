@@ -1,0 +1,38 @@
+{
+  "name": "game-of-life",
+  "version": "0.2.5",
+  "description": "A simulation of the 'Game of Life' by John Conway",
+  "author": "Thomas Heyenbrock <thomas.heyenbrock@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+  },
+  "keywords": [
+    "terminal",
+    "print",
+    "color",
+    "nodejs"
+  ],
+  "main": "dist/index.js",
+  "bin": "bin/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "start": "node .",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "terminal-printer": "^0.2.4"
+  }
+}

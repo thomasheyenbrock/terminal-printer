@@ -105,7 +105,7 @@ export class Snake {
       newBlock.col < 0 ||
       newBlock.col >= columns ||
       this.blocks.findIndex(
-        block => block.row === newBlock.row && block.col === newBlock.col,
+        (block) => block.row === newBlock.row && block.col === newBlock.col,
       ) >= 0
     ) {
       this.endGame();
@@ -141,8 +141,9 @@ export class Snake {
     let col = Math.floor(Math.random() * this.columns);
 
     while (
-      this.blocks.findIndex(block => block.row === row && block.col === col) >=
-      0
+      this.blocks.findIndex(
+        (block) => block.row === row && block.col === col,
+      ) >= 0
     ) {
       row = Math.floor(Math.random() * this.rows);
       col = Math.floor(Math.random() * this.columns);
@@ -185,7 +186,7 @@ export class Snake {
       });
     }
 
-    this.blocks.forEach(block => {
+    this.blocks.forEach((block) => {
       this.printer.setPixel(block.row, block.col, {
         backgroundColor: null,
         foregroundColor: null,

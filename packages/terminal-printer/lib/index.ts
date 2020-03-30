@@ -36,8 +36,8 @@ export class Printer implements PrinterInterface {
     this.height = (config && config.height) || process.stdout.rows!;
     this.width = (config && config.width) || process.stdout.columns!;
 
-    this.printer = Array.from({ length: this.height }).map(_ =>
-      Array.from({ length: this.width }).map(__ => ({
+    this.printer = Array.from({ length: this.height }).map((_) =>
+      Array.from({ length: this.width }).map((__) => ({
         backgroundColor: (config && config.backgroundColor) || null,
         foregroundColor: (config && config.foregroundColor) || null,
         value: " ",
@@ -74,10 +74,10 @@ export class Printer implements PrinterInterface {
 
   public print(): void {
     const print = this.printer
-      .map(row =>
+      .map((row) =>
         row
           .map(
-            cell =>
+            (cell) =>
               `${getTerminalColor(
                 "foreground",
                 cell.foregroundColor,
@@ -107,7 +107,7 @@ export class Printer implements PrinterInterface {
     };
 
     const elementInUpdateBuffer = this.updateBuffer.findIndex(
-      update => update.row === row && update.column === column,
+      (update) => update.row === row && update.column === column,
     );
     if (elementInUpdateBuffer < 0) {
       this.updateBuffer.push({
@@ -143,8 +143,9 @@ export class Printer implements PrinterInterface {
         let newUpdateString = currentUpdateString;
         if (index === 0) {
           // this element is the first, so write position and both colors
-          newUpdateString += `\x1b[${updateElement.row +
-            1};${updateElement.column + 1}H`;
+          newUpdateString += `\x1b[${updateElement.row + 1};${
+            updateElement.column + 1
+          }H`;
           newUpdateString += getTerminalColor(
             "background",
             updateElement.pixel.backgroundColor || null,
@@ -162,8 +163,9 @@ export class Printer implements PrinterInterface {
           if (!hasPredecessorInSameRow) {
             // there is no update element in this row, so position the
             // cursor at the location of the update element
-            newUpdateString += `\x1b[${updateElement.row +
-              1};${updateElement.column + 1}H`;
+            newUpdateString += `\x1b[${updateElement.row + 1};${
+              updateElement.column + 1
+            }H`;
           } else {
             // there is a update element in this row, so the cursor is
             // already located in this row
@@ -175,9 +177,9 @@ export class Printer implements PrinterInterface {
               // the current element does not directly follow the last
               // element, so move the cursor as many columns forward as
               // necessary
-              newUpdateString += `\x1b[${updateElement.column -
-                previousElement.column -
-                1}C`;
+              newUpdateString += `\x1b[${
+                updateElement.column - previousElement.column - 1
+              }C`;
             }
           }
 

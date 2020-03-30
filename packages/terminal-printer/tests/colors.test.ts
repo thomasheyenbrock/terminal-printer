@@ -40,7 +40,7 @@ describe("colors", () => {
     });
   });
   describe("toHex", () => {
-    describe.each(Object.keys(colors))("color %s", color => {
+    describe.each(Object.keys(colors))("color %s", (color) => {
       it("should find the color", () => {
         expect(toHex(color as Color)).toBe(colors[color as Color]);
       });

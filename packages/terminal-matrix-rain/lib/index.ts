@@ -43,7 +43,7 @@ export class Matrix {
     this.removeFinishedColumns();
 
     // Update all remaining columns.
-    this.charColumns.forEach(charColumn => {
+    this.charColumns.forEach((charColumn) => {
       // index is the row of the furthest visible char
       const index = Math.floor(charColumn.iteration / charColumn.speed);
 
@@ -101,7 +101,7 @@ export class Matrix {
 
   removeFinishedColumns() {
     this.charColumns = this.charColumns.filter(
-      char =>
+      (char) =>
         char.iteration <=
         this.rows * char.speed + Math.floor(256 / 8) + Math.floor(256 / 4),
     );

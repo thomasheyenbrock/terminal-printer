@@ -21,6 +21,7 @@
   ],
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "husky install",
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
     "prettify": "prettier --write **/*.{js,ts,json}",
@@ -43,12 +44,6 @@
     "tslint-eslint-rules": "^5.3.1",
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.5"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "**/*.ts": [

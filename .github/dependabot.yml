@@ -8,11 +8,3 @@ updates:
   open-pull-requests-limit: 10
   assignees:
   - thomasheyenbrock
-  ignore:
-  - dependency-name: "@types/node"
-    versions:
-    - 15.0.0
-  - dependency-name: husky
-    versions:
-    - 5.0.9
-    - 5.1.0

@@ -28,7 +28,7 @@
     "test": "lerna run test --stream"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
+    "@commitlint/cli": "^14.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.0.1",

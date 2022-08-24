@@ -7,7 +7,8 @@
   "homepage": "https://github.com/thomasheyenbrock/terminal-printer#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thomasheyenbrock/terminal-printer.git"
+    "url": "https://github.com/thomasheyenbrock/terminal-printer",
+    "directory": "packages/terminal-game-of-life"
   },
   "keywords": [
     "terminal",

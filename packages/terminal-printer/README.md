@@ -56,7 +56,7 @@ printer.update();
 
 Horray! You should now see the following:
 
-![getting-started](/demo/getting-started.png)
+![getting-started](demo/getting-started.png)
 
 In the end, don't forget to get your cursor back!
 

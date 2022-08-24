@@ -21,21 +21,22 @@
   ],
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "husky install",
     "build": "lerna run build --stream",
     "lint": "lerna run lint --stream",
     "prettify": "prettier --write **/*.{js,ts,json}",
     "test": "lerna run test --stream"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@types/jest": "^25.1.0",
-    "@types/node": "^13.1.7",
-    "husky": "^4.0.10",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^18.0.0",
+    "husky": "^8.0.0",
     "jest": "^25.1.0",
-    "lerna": "^3.20.2",
-    "lint-staged": "^10.0.1",
-    "prettier": "^1.19.1",
+    "lerna": "^5.1.2",
+    "lint-staged": "^13.0.0",
+    "prettier": "^2.0.2",
     "ts-jest": "^25.0.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2",
@@ -43,12 +44,6 @@
     "tslint-eslint-rules": "^5.3.1",
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.5"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "**/*.ts": [

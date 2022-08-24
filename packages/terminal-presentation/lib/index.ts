@@ -18,13 +18,13 @@ export class Presentation {
     const directory = process.argv[2];
     const files = fs
       .readdirSync(path.join(directory))
-      .filter(name => name.endsWith(".txt"));
+      .filter((name) => name.endsWith(".txt"));
 
     if (files.length === 0) {
       throw new Error("The given directory does not contain any txt-files.");
     }
 
-    this.slides = files.map(name =>
+    this.slides = files.map((name) =>
       fs.readFileSync(path.resolve(directory, name), "utf8"),
     );
     this.printer = new Printer({

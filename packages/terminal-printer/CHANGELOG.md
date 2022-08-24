@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.3.1...v0.4.0) (2022-08-24)
+
+
+### Features
+
+* relative links in readme ([5113e10](https://github.com/thomasheyenbrock/terminal-printer/commit/5113e105903e52b64fbab8753034e84317857d26))
+
+
+
+
+
 # [0.3.0](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.2.5...v0.3.0) (2020-02-02)
 
 **Note:** Version bump only for package terminal-printer

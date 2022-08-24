@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.3.1...v0.4.0) (2022-08-24)
+
+
+### Bug Fixes
+
+* don't ignore any deps ([8df0e03](https://github.com/thomasheyenbrock/terminal-printer/commit/8df0e032a00db1ac3676b2bc05586f3a70a4f1b2))
+
+
+### Features
+
+* relative links in readme ([5113e10](https://github.com/thomasheyenbrock/terminal-printer/commit/5113e105903e52b64fbab8753034e84317857d26))
+
+
+
+
+
 ## [0.3.1](https://github.com/thomasheyenbrock/terminal-printer/compare/v0.3.0...v0.3.1) (2020-02-02)
 
 

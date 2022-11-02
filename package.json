@@ -34,7 +34,7 @@
     "@types/node": "^18.0.0",
     "husky": "^8.0.0",
     "jest": "^25.1.0",
-    "lerna": "^5.1.2",
+    "lerna": "^6.0.1",
     "lint-staged": "^13.0.0",
     "prettier": "^2.0.2",
     "ts-jest": "^25.0.0",

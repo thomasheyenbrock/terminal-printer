@@ -29,11 +29,11 @@ describe("Printer", () => {
         printer = new Printer();
       });
       it("should throw an error if no height could be found", () => {
-        delete process.stdout.rows;
+        delete (process.stdout as any).rows;
         expect(() => new Printer()).toThrowError();
       });
       it("should throw an error if no width could be found", () => {
-        delete process.stdout.columns;
+        delete (process.stdout as any).columns;
         expect(() => new Printer()).toThrowError();
       });
       it("should use the process rows as height", () => {

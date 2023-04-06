@@ -26,7 +26,7 @@ aliases:
 # Defaults for node environment
 node16Environment: &node16Environment
   docker:
-    - image: circleci/node:16
+    - image: cimg/node:16.20
   working_directory: *working_directory
 
 version: 2

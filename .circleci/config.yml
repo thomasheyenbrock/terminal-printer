@@ -24,15 +24,15 @@ aliases:
     command: git checkout yarn.lock
 
 # Defaults for node environment
-node16Environment: &node16Environment
+node18Environment: &node18Environment
   docker:
-    - image: cimg/node:16.20
+    - image: cimg/node:18.19
   working_directory: *working_directory
 
 version: 2
 jobs:
   install:
-    <<: *node16Environment
+    <<: *node18Environment
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
@@ -40,7 +40,7 @@ jobs:
       - run: *reset_lockfile
       - save-cache: *save_npm_cache
   lint:
-    <<: *node16Environment
+    <<: *node18Environment
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
@@ -48,7 +48,7 @@ jobs:
           name: "Linting"
           command: yarn lint
   test:
-    <<: *node16Environment
+    <<: *node18Environment
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
@@ -56,7 +56,7 @@ jobs:
           name: "Testing"
           command: yarn test
   build:
-    <<: *node16Environment
+    <<: *node18Environment
     steps:
       - checkout
       - restore-cache: *restore_npm_cache
@@ -70,7 +70,7 @@ jobs:
             - packages/terminal-printer/dist
             - packages/terminal-snake/dist
   publish:
-    <<: *node16Environment
+    <<: *node18Environment
     steps:
       - add_ssh_keys:
           fingerprints:
